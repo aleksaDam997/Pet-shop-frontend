@@ -37,6 +37,7 @@ export default ImageSlider;
 
 const Carousel = styled(Slider)`
     margin-top: 20px;
+    
     // overflow-x: scroll;
     // overflow-y: hidden;
 
@@ -62,6 +63,8 @@ const Carousel = styled(Slider)`
 `;
 
 const Wrap = styled.div`
+
+    height: 400px;
 
     cursor: pointer;
     

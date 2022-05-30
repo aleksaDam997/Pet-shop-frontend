@@ -5,7 +5,10 @@ import styled from 'styled-components'
 const Home = () => {
   return (
     <Container>
-      <ImageSlider></ImageSlider>
+
+        <ImageSlider></ImageSlider>
+
+      
     </Container>
   )
 }
@@ -14,10 +17,14 @@ export default Home;
 
 const Container = styled.div`
 
-    min-height: calc(100vh - 70px);
+    min-height: calc(100vh - 120px);
     padding: 0 calc(3.5vw + 5px);
     position: relative;
     overflow-x: hidden;
+    display: block;
+    width: 80%;
+
+    margin: 0 auto;
     
     &:before {
         background: url("/images/home-background.png") center center / cover 
