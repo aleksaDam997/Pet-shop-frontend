@@ -1,7 +1,7 @@
 import React from 'react';
-import useForm from './UseForm';
+import useForm from '../UseForm';
 import './Registration.scss';
-import validate from './validateInfo';
+import validate from '../validateInfo';
 import { Container } from 'react-bootstrap';
 
 const Registration = () => {

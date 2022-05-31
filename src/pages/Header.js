@@ -4,6 +4,7 @@ import { Container, Nav, NavDropdown, Navbar } from 'react-bootstrap';
 import styled from 'styled-components';
 import axios from 'axios';
 import mySvg from '../img/logo-pet-shop.svg';
+import * as api from "../api/api";
 
 export default class header extends Component {
 
@@ -21,11 +22,11 @@ export default class header extends Component {
     // }
 
     componentDidMount() {
-        axios.get(`http://192.168.238.41:8080/api/user/get/categories`)
+        axios.get(`http://localhost:8080/api/user/get/categories`)
           .then(res => {
      
             console.log(res.data);
-          })
+          });
       }
 
   render() {
@@ -33,8 +34,8 @@ export default class header extends Component {
     const niz = ["Akcija 1", "Akcija 2", "Akcija 3"];
 
     return (
-        <Navbar bg="light" expand="lg">
         <Container>
+            <Navbar bg="light" expand="lg">
             <Navbar.Brand href="#home">
                 <a><img src={mySvg} alt='logo'/></a>
                 </Navbar.Brand>
@@ -43,6 +44,9 @@ export default class header extends Component {
             <Nav className="me-auto">
                 <Nav.Link href="#home">Home</Nav.Link>
                 <Nav.Link href="registracija">Registracija</Nav.Link>
+                <Nav.Link href="prijava">Prijava</Nav.Link>
+                {/* <Nav.Link href="ljubimci">Ljubimci</Nav.Link>
+                <Nav.Link href="proizvodi">Proizvodi</Nav.Link> */}
                 <NavDropdown title="Kategorije" id="basic-nav-dropdown">
                     {
                         niz.map(clan => {
@@ -59,8 +63,9 @@ export default class header extends Component {
                 </NavDropdown>
             </Nav>
             </Navbar.Collapse>
+            </Navbar>
         </Container>
-        </Navbar>
+       
     )
   }
 }
