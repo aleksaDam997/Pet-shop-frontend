@@ -1,12 +1,14 @@
 import React from 'react'
 import ImageSlider from '../../components/ImageSlider'
 import styled from 'styled-components'
+import ThreeImg from '../../components/ThreeImg'
 
 const Home = () => {
   return (
     <Container>
 
         <ImageSlider></ImageSlider>
+        <ThreeImg />
 
       
     </Container>

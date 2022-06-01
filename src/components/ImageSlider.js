@@ -21,13 +21,13 @@ function ImageSlider() {
                 <img src="../img/kanjon.jpg" alt="" />
             </Wrap>
             <Wrap>
-                <img src="../img/kanjon.jpg" alt="" />
+                <img src="../img/pet-klub.jpg" alt="" />
             </Wrap>
             <Wrap>
-                <img src="../img/kanjon.jpg" alt="" />
+                <img src="../img/moj-ljubimac.jpg" alt="" />
             </Wrap>
             <Wrap>
-                <img src="../img/kanjon.jpg" alt="" />
+                <img src="../img/veterinar.jpg" alt="" />
             </Wrap>
         </Carousel>
     )

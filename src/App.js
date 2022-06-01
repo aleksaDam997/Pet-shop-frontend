@@ -5,7 +5,7 @@ import Contact from "./pages/Contact";
 import Home from "./pages/Home/Home";
 import Header from "./pages/Header";
 import Footer from "./pages/Footer";
-import Registration from "./pages/Registration/Registration";
+import Registration from "./pages/Registration";
 import Prijava from "./pages/Prijava";
 import { Container } from 'react-bootstrap';
 
