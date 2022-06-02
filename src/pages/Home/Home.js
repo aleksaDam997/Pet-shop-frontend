@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <Container>
 
-        <ImageSlider></ImageSlider>
+        <ImageSlider />
         <ThreeImg />
 
       

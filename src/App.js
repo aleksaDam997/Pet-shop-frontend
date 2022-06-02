@@ -3,11 +3,10 @@ import {BrowserRouter, Routes, Route, HashRouter} from 'react-router-dom'
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Home from "./pages/Home/Home";
-import Header from "./pages/Header";
+import Header from "./pages/Header/Header";
 import Footer from "./pages/Footer";
 import Registration from "./pages/Registration";
 import Prijava from "./pages/Prijava";
-import { Container } from 'react-bootstrap';
 import PetKlub from "./pages/PetKlub";
 import Ljubimac from "./pages/Ljubimac";
 
@@ -15,7 +14,6 @@ import Ljubimac from "./pages/Ljubimac";
 
 function App() {
   return (
-    <Container className="bg-light">
       <BrowserRouter basename="/">
         <Header />
         <Routes>
@@ -29,7 +27,6 @@ function App() {
         </Routes>
         <Footer />
       </BrowserRouter>
-    </Container>
   );
 }
 

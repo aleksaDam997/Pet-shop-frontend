@@ -4,6 +4,7 @@ import image1 from '../img/pet-klub.jpg';
 import image2 from '../img/moj-ljubimac.jpg';
 import image3 from '../img/veterinar.jpg';
 
+
 const ThreeImg = () => {
   return (
    <div className='three-img'>
@@ -14,4 +15,4 @@ const ThreeImg = () => {
   )
 }
 
-export default ThreeImg
+export default ThreeImg;
