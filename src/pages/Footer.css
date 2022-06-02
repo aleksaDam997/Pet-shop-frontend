@@ -1,0 +1,9 @@
+.footer{
+    background-color: beige;
+    height: 80px;
+}
+.footer>span{
+    color: black;
+    font-size: 22px;
+    font-weight: bolder;
+}

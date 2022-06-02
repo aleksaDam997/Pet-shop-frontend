@@ -1,0 +1,14 @@
+.three-img{
+    margin-top: 50px;
+    display: flex;
+}
+a > img{
+   flex-grow: 1;
+   flex-basis: 0;
+   width: 100%;
+}
+@media screen and (max-width:800px) {
+    .three-img{
+        flex-direction: column;
+    }
+}

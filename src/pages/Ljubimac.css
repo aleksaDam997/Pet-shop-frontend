@@ -1,0 +1,32 @@
+.section{
+    background-color: #ffffff;
+}
+@media screen and (max-width:900px) {
+    .section{
+        flex-direction: column;
+    }
+}
+.items-handler{
+    display: flex;
+}
+@media screen and (max-width:768px) {
+    .items-handler{
+        flex-direction: column;
+    }
+    }
+.description-img{
+    text-align: center;
+}
+.description-img > a{
+    text-decoration: none;
+    color: black;
+
+}
+.podnaslov{
+    box-sizing: border-box;
+    background-color: #922B21 ;
+    color: #ffffff;
+    padding: 20px 20px;
+    font-family: 30px;
+    font-weight: bolder;
+}

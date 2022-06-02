@@ -4,6 +4,16 @@ import "slick-carousel/slick/slick-theme.css";
 import styled from 'styled-components';
 import Slider from 'react-slick';
 
+import pocetna from '../img/pet-slider/pocetna.jpg'
+import image1 from '../img/pet-slider/2021-10-25-1.jpg'
+import image2 from '../img/pet-slider/2021-10-25-2.jpg'
+import image3 from '../img/pet-slider/2021-10-25-3.jpg'
+import image4 from '../img/pet-slider/2021-10-25-4.jpg'
+import image5 from '../img/pet-slider/2021-10-25-5.jpg'
+import image6 from '../img/pet-slider/2021-10-25-6.jpg'
+import image7 from '../img/pet-slider/2021-10-25-7.jpg'
+import image8 from '../img/pet-slider/2021-10-25-8.jpg'
+
 function ImageSlider() {
 
     let settings = {
@@ -18,16 +28,31 @@ function ImageSlider() {
     return (
         <Carousel {...settings}>
             <Wrap>
-                <img src="../img/kanjon.jpg" alt="" />
+                <img src={pocetna} alt="" />
             </Wrap>
             <Wrap>
-                <img src="../img/pet-klub.jpg" alt="" />
+                <img src={image1} alt="#" />
             </Wrap>
             <Wrap>
-                <img src="../img/moj-ljubimac.jpg" alt="" />
+                <img src={image2} alt="#" />
             </Wrap>
             <Wrap>
-                <img src="../img/veterinar.jpg" alt="" />
+                <img src={image3} alt="#" />
+            </Wrap>
+            <Wrap>
+                <img src={image4} alt="#" />
+            </Wrap>
+            <Wrap>
+                <img src={image5} alt="#" />
+            </Wrap>
+            <Wrap>
+                <img src={image6} alt="#" />
+            </Wrap>
+            <Wrap>
+                <img src={image7} alt="#" />
+            </Wrap>
+            <Wrap>
+                <img src={image8} alt="#" />
             </Wrap>
         </Carousel>
     )
