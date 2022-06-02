@@ -6,7 +6,7 @@ import Home from "./pages/Home/Home";
 import Header from "./pages/Header/Header";
 import Footer from "./pages/Footer";
 import Registration from "./pages/Registration";
-import Prijava from "./pages/Prijava";
+import Prijava from "./pages/Login/Login";
 import PetKlub from "./pages/PetKlub";
 import Ljubimac from "./pages/Ljubimac";
 

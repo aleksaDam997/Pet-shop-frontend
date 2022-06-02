@@ -5,7 +5,7 @@ import ThreeImg from '../../components/ThreeImg'
 
 const Home = () => {
   return (
-    <Container>
+    <Container className='bg-light'>
 
         <ImageSlider />
         <ThreeImg />
