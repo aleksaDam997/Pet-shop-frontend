@@ -10,63 +10,60 @@ export default class Prijava extends Component {
 
     constructor(props) {
         super(props);
+
         this.state = {
             email: "",
             password: "",
             isLoggedIn: false,
-            message: ""
+            emailMessage: {
+                error: false,
+                message: "Neka poruka"
+            }
         }
 
-        this.handlePasswordChange = this.handlePasswordChange.bind(this);
-        this.handleEmailChange = this.handleEmailChange.bind(this);
+        this.handleInputFieldChange = this.handleInputFieldChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+
     
-    handlePasswordChange(event) {
-        this.setState({
-            password: event.target.value}
-            );
+    handleInputFieldChange(event) {
+
+        this.setState(Object.assign(
+            this.state, {
+                [event.target.name]: event.target.value
+            }
+        ))
       }
   
     handleSubmit(e) {
 
-        e.preventDefault()
+        api.login({
+            email: this.state.email,
+            password: this.state.password 
+        }).then(res => {
 
-          const body = {
-              email: this.state.email,
-              password: this.state.password
-          }
-  
-          api.login(body).then(res => {
-              
-            this.setState(
-                Object.assign(this.state, {
-                    isLoggedIn: true
-                })
-            )
-            console.log(this.state.isLoggedId);
-          }).catch(err => {
 
-            this.setState({
-                message: err
-            });
-          });
+           this.setState(Object.assign(this.state, Object.assign(this.state.errorMessage, {
+               error: true,
+               message: "Neka poruka"
+           })))
+
+          
+            
+            this.setState(Object.assign(this.state, 
+                {isLoggedIn: true
+                }));
+        }).catch(err => {
+            
+            console.log("Greska");
+        })
+        
       }
       
-    handleEmailChange(event) {
-        this.setState(
-            {
-                email: event.target.value
-            }
-            );
-      }
   render() {
 
     if(this.state.isLoggedId){
-            console.log("Aktivirano");
-        return(
-            <Navigate to="/" />
-        );
+        <Navigate to="/" />
     }
 
     return (
@@ -77,15 +74,15 @@ export default class Prijava extends Component {
                        <Form>
                            <Form.Group>
                                <Form.Label htmlFor="email">E-mail</Form.Label>
-                               <Form.Control type='email' id='email' aria-describedby="emailHelp" placeholder="Enter email" 
-                               value={this.state.email} onChange={(event) => this.formInputChanged(event)}></Form.Control>
-                                <small id="emailHelp" className="text-danger form-text">
-                                    {/* {emailError} */}
+                               <Form.Control name="email" type='email' id='email' aria-describedby="emailHelp" placeholder="Enter email" 
+                               value={this.state.email} onChange={(event) => this.handleInputFieldChange(event)}></Form.Control>
+                                <small id="emailHelp" className={this.state.emailMessage.error ? 'd-flex' : 'd-none'}>
+                                    {this.state.emailMessage.message}
                                 </small>
                            </Form.Group>
                            <Form.Group>
                                <Form.Label htmlFor="password">Password</Form.Label>
-                               <Form.Control type='password' placeholder="Password" id='password' value={this.state.password} onChange={(event) => this.formInputChanged(event)}></Form.Control>
+                               <Form.Control name="password" type='password' placeholder="Password" id='password' value={this.state.password} onChange={(event) => this.handleInputFieldChange(event)}></Form.Control>
                                <small id="passworderror" className="text-danger form-text">
                                     {/* {passwordError} */}
                                 </small>
@@ -99,7 +96,7 @@ export default class Prijava extends Component {
                                 <label className="form-check-label">Check me out</label>
                             </div>
                            <Form.Group>
-                               <Button variant="primary" onClick={() => this.doLogin()}>Log in</Button>
+                               <Button variant="primary" onClick={() => this.handleSubmit()}>Log in</Button>
                            </Form.Group>
                        </Form>
                        <Alert variant="danger" className={this.state.errorMessage ? '' : 'd-none'}>{this.state.errorMessage}</Alert>

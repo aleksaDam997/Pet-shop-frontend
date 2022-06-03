@@ -9,6 +9,7 @@ import Registration from "./pages/Registration";
 import Prijava from "./pages/Login/LoginPage";
 import PetKlub from "./pages/PetKlub";
 import Ljubimac from "./pages/Ljubimac";
+import PetsAndProducts from "./pages/PetsAndProducts/PetsAndProducts";
 
 
 
@@ -24,6 +25,7 @@ function App() {
           <Route path="prijava" element={<Prijava/>} />
           <Route path="pet-klub" element={<PetKlub/>} />
           <Route path="ljubimac" element={<Ljubimac/>} />
+          <Route path="pats-and-products" element={<PetsAndProducts/>} />
         </Routes>
         <Footer />
       </BrowserRouter>

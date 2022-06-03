@@ -22,6 +22,7 @@ export default class header extends Component {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                       <Nav.Link href="#home">Home</Nav.Link>
+                      <Nav.Link href="/pats-and-products">Ljubimci</Nav.Link>
                       <Form className="d-flex">
                         <FormControl
                               type="search"
