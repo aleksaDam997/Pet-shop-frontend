@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './PetsAndProducts.css';
 import { faArchway, faListAlt, faSearch } from "@fortawesome/free-solid-svg-icons";
 import * as api from "../../api/api";
-import {SinglePetProductPreview} from "../SinglePetProductPreview/SinglePetProductPreview";
+import {SinglePetProductPreview} from "../../components/SinglePetProductPreview/SinglePetProductPreview";
 import { ApiConfig } from "../../config/ApiConfig";
 
 export default class PetsAndProducts extends React.Component {
