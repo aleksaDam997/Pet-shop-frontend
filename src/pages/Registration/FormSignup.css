@@ -58,14 +58,12 @@ form div input {
     border-radius: 5%;
     transition: 0.3s;
 }
-
-// form ul {
-// 	list-style: none;
-// }
-
-// form ul li {
-// 	color: red;
-// }
+p {
+	color: red;
+	margin: 0;
+	font-weight: bolder;
+	margin-left: 10px;
+}
 span{
 	margin-left: 15px;
 }

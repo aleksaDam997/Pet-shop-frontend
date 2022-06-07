@@ -1,0 +1,62 @@
+import { useState, useEffect } from "react";
+import { api } from "../../api/api";
+import { ApiConfig } from "../../config/ApiConfig";
+
+const useForm = (callback, validate) => {
+    const [values, setValues] = useState({
+        firstName: '',
+        lastName: '',
+        userName: '',
+        email: '',
+        address: '',
+        phone: '',
+        password: '',
+        password2: ''
+    })
+
+    const [errors, setErrors] = useState({});
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const handleChange = e => {
+        const {name, value} = e.target
+        setValues({
+            ...values,
+            [name]: value
+
+        })
+    }
+    const handleSubmit = e => {
+        e.preventDefault();
+
+        const body = {
+            firstName: this.values.firstName,
+            lastName: this.values.lastName,
+            userName: this.values.userName,
+            password: this.values.password,
+            email: this.values.email,
+            contact: this.values.phone,
+            address: this.values.address,
+            role: 'USER'
+        }
+
+        api.api(ApiConfig + 'api/user/registration', 'post', body ).then(res => {
+            
+        })
+
+
+        setErrors(validate(values));
+        setIsSubmitting(true)
+    }
+    useEffect(() => {
+        if (Object.keys(errors).length === 0 && isSubmitting){
+            callback()
+        }    
+    },[errors])
+
+
+
+
+    return {handleChange, values, handleSubmit,errors}
+}
+
+export default useForm

@@ -1,0 +1,84 @@
+import React from 'react';
+import './FormSignup.css';
+import useForm from './useForm';
+import validate from './validateInfo';
+import * as api from '../../api/api';
+
+
+
+
+
+
+const FormSignup = ({submitForm}) => {
+ 
+	const {handleChange, values, handleSubmit, errors} = useForm(submitForm,validate);
+
+  return (
+        <form onSubmit={handleSubmit}>
+			<h1>Registracija korisnika</h1>
+			<div className='form-group'>
+				<label for="firstName">Ime:</label>
+				<input id="firstName" type="text" name="firstName" placeholder="Marko"
+				value={values.firstName}
+				onChange={handleChange} />
+				{errors.firstName && <p>{errors.firstName}</p>}
+			</div>
+			<div>
+				<label for="lastName">Prezime:</label>
+				<input id="lastName" type="text" name="lastName" placeholder="Marković" 
+				value={values.lastName}
+				onChange={handleChange}/>
+				{errors.lastName && <p>{errors.lastName}</p>}
+			</div>
+			<div>
+				<label for="userName">Korisničko ime:</label>
+				<input id="userName" type="text" name="userName" placeholder="Mare"
+				value={values.userName} 
+				onChange={handleChange}/>
+				{errors.userName && <p>{errors.userName}</p>}
+			</div>
+			<div>
+				<label for="email">Email adresa:</label>
+				<input id="email" type="text" name="email" placeholder="marko.markovic@mail.com" 
+				value={values.email}
+				onChange={handleChange}/>
+				{errors.email && <p>{errors.email}</p>}
+			</div>
+			<div>
+				<label for="address">Adresa stanovanja:</label>
+				<input id="address" type="text" name="address" placeholder="Doboj, Celjska 37/5"
+				value={values.address} 
+				onChange={handleChange}/>
+				{errors.address && <p>{errors.address}</p>}
+			</div>
+			<div>
+				<label for="phone">Broj telefona:</label>
+				<input type="tel" id="phone" name="phone" placeholder="065121212"
+				value={values.phone} 
+				onChange={handleChange}/>
+				{errors.phone && <p>{errors.phone}</p>}
+			</div>
+			<div>
+				<label for="password">Lozinka:</label>
+				<input id="password" type="password" name="password" placeholder="*******" 
+				value={values.password}
+				onChange={handleChange}/>
+				{errors.password && <p>{errors.password}</p>}
+			</div>
+			<div>
+				<label for="password2">Ponovi lozinku:</label>
+				<input id="password2" type="password" name="password2" placeholder="*******" 
+				value={values.password2}
+				onChange={handleChange}/>
+				{errors.password2 && <p>{errors.password2}</p>}
+			</div>
+			<div>
+				<button type='submit' className='btn btn-primary' >Registruj se</button>
+				<span>Vec si registrovan? Uloguj se <a href='/prijava'>ovdje</a>.</span>
+			</div>
+		</form>
+   
+	)}
+
+
+export default FormSignup
