@@ -1,0 +1,12 @@
+.about-us{
+    margin: 30px auto;
+    width: 70%;
+    padding: 8px;
+}
+.img-about{
+    float: left;
+    padding: 0 10px 0 0;
+}
+.text{
+    text-align: justify;
+}

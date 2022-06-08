@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { api } from "../../api/api";
-import { ApiConfig } from "../../config/ApiConfig";
+// import { api } from "../../api/api";
+// import { ApiConfig } from "../../config/ApiConfig";
 
 const useForm = (callback, validate) => {
     const [values, setValues] = useState({
@@ -28,20 +28,20 @@ const useForm = (callback, validate) => {
     const handleSubmit = e => {
         e.preventDefault();
 
-        const body = {
-            firstName: this.values.firstName,
-            lastName: this.values.lastName,
-            userName: this.values.userName,
-            password: this.values.password,
-            email: this.values.email,
-            contact: this.values.phone,
-            address: this.values.address,
-            role: 'USER'
-        }
+        // const body = {
+        //     firstName: this.values.firstName,
+        //     lastName: this.values.lastName,
+        //     userName: this.values.userName,
+        //     password: this.values.password,
+        //     email: this.values.email,
+        //     contact: this.values.phone,
+        //     address: this.values.address,
+        //     role: 'USER'
+        // }
 
-        api.api(ApiConfig + 'api/user/registration', 'post', body ).then(res => {
+        // api.api(ApiConfig + 'api/user/registration', 'post', body ).then(res => {
             
-        })
+        // })
 
 
         setErrors(validate(values));

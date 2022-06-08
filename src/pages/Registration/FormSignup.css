@@ -58,7 +58,7 @@ form div input {
     border-radius: 5%;
     transition: 0.3s;
 }
-p {
+.erors-msg {
 	color: red;
 	margin: 0;
 	font-weight: bolder;
