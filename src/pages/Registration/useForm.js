@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { api } from "../../api/api";
+import * as api from "../../api/api";
 import { ApiConfig } from "../../config/ApiConfig";
 
 const useForm = (callback, validate) => {
@@ -29,18 +29,18 @@ const useForm = (callback, validate) => {
         e.preventDefault();
 
         const body = {
-            firstName: this.values.firstName,
-            lastName: this.values.lastName,
-            userName: this.values.userName,
-            password: this.values.password,
-            email: this.values.email,
-            contact: this.values.phone,
-            address: this.values.address,
+            firstName: values.firstName,
+            lastName: values.lastName,
+            userName: values.userName,
+            password: values.password,
+            email: values.email,
+            contact: values.phone,
+            address: values.address,
             role: 'USER'
         }
 
-        api.api(ApiConfig + 'api/user/registration', 'post', body ).then(res => {
-            
+        api.api("api/user/registration", 'post', body ).then(res => {
+            console.log(res.data);
         })
 
 
@@ -56,7 +56,7 @@ const useForm = (callback, validate) => {
 
 
 
-    return {handleChange, values, handleSubmit,errors}
+    return {handleChange, values, handleSubmit, errors}
 }
 
 export default useForm

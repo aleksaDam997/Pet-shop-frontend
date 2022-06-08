@@ -5,7 +5,13 @@ import validate from './validateInfo';
 import * as api from '../../api/api';
 
 
-
+const onTrigger = (event) => {
+	this.props.parentCallback({
+		firstName: event.target.firstName.value,
+		lastName: event.target.lastName.value
+	});
+	event.preventDefault();
+}
 
 
 

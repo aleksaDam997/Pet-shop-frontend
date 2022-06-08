@@ -54,6 +54,7 @@ export default class PetsAndProducts extends React.Component {
                     petts[petts.length - 1].photoPath = path;
                 });
                 
+                console.log(petts[petts.length - 1].photoPath);
 
                 this.setState(Object.assign(this.state, {
                     pets: petts
