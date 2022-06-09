@@ -3,7 +3,7 @@ import "./FormSuccess.css"
 
 const FormSuccess = (props) => {
 
-  console.log(props.data);
+  console.log(props);
 
   return (
     <div>

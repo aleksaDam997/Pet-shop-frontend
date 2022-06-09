@@ -1,3 +1,11 @@
+.pet-klub{
+    margin: 20px 15px;
+}
+.link-mail{
+    color: blue;
+    text-decoration: none;
+    display: inline-block;
+}
 h2{
     font-size: 35px;
     font-weight: bolder;
@@ -29,4 +37,8 @@ ul > li {
 .second{
     margin-left: 10px;
     flex-grow: 5;
+}
+p{
+    color: black;
+    font-weight: 400;
 }

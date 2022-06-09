@@ -15,7 +15,7 @@ const PetKlub = () => {
             <div className='second'>
             <h3>ŠTA JE PET CENTAR KLUB?</h3>
             <p>Pet centar klub pokrenut je od samih početaka rada Pet centra, sa svrhom pružanja pogodnosti redovnim kupcima.  Učlanjenje u Pet centar klub donosi pravo na povoljnije uslove kupovine, kao i na učestvovanje u akcijama namenjenim samo članovima. Pogodnosti za članove odnose se samo za kupovinu u Pet centar prodavnicama i ne važe za online kupovinu.<br />
-            Informacije o aktuelnim pogodnostima za članove Pet centar kluba uvek su dostupne na našim stranicama i istaknute u prostoru prodavnice. Prodajno osoblje Pet centra na raspolaganju je za sva dodatna pitanja o članskim akcijama, a možete nas kontaktirati za sva pitanja i na <a href='mailto:info@pet-centar.rs?subject=Pitanje korisnika'>info@pet-centar.rs</a>.</p>  
+            Informacije o aktuelnim pogodnostima za članove Pet centar kluba uvek su dostupne na našim stranicama i istaknute u prostoru prodavnice. Prodajno osoblje Pet centra na raspolaganju je za sva dodatna pitanja o članskim akcijama, a možete nas kontaktirati za sva pitanja i na <a className='link-mail' href='mailto:info@pet-centar.rs?subject=Pitanje korisnika'>info@pet-centar.rs</a>.</p>  
             </div>
         </div>
         <div className='flex'>

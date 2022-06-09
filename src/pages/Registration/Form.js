@@ -16,6 +16,7 @@ const Form = () => {
         firstName: childObject.firstName,
         lastName: childObject.lastName
       })
+      console.log(childData);
     }
   return (
     <div>

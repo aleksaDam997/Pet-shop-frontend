@@ -19,12 +19,12 @@ h4{
     font-weight: bold;
     color: #ffffff;
 }
-a, span{
+a, .tel{
   display: block;
   text-decoration: none;
   color: #ffffff;
 }
-a:hover, span:hover{
+a:hover, .tel:hover{
     cursor: pointer;
     color: gray;
   }
@@ -32,3 +32,9 @@ a:hover, span:hover{
       padding-left: 0%;
       margin-left: 0%;
   }
+  .footer-title{
+      margin-right: 10px;
+  }
+ .social-logo{
+    margin-right: 5px;
+ }

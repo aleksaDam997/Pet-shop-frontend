@@ -42,6 +42,20 @@ const useForm = (callback, validate) => {
         api.api("api/user/registration", 'post', body ).then(res => {
             console.log(res.data);
         })
+        // const body = {
+        //     firstName: this.values.firstName,
+        //     lastName: this.values.lastName,
+        //     userName: this.values.userName,
+        //     password: this.values.password,
+        //     email: this.values.email,
+        //     contact: this.values.phone,
+        //     address: this.values.address,
+        //     role: 'USER'
+        // }
+
+        // api.api(ApiConfig + 'api/user/registration', 'post', body ).then(res => {
+            
+        // })
 
 
         setErrors(validate(values));
