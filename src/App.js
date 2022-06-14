@@ -13,6 +13,7 @@ import AboutUs from "./pages/AboutUs";
 import FirstLocation from "./pages/Location/FirstLocation";
 import SecondLocation from "./pages/Location/SecondLocation";
 import ThridLocation from "./pages/Location/ThridLocation";
+import { PetPage } from "./components/PetPage/PetPage";
 
 
 
@@ -32,6 +33,7 @@ function App() {
           <Route path="prva-prodavnica" element={<FirstLocation/>} />
           <Route path="druga-prodavnica" element={<SecondLocation/>} />
           <Route path="treca-prodavnica" element={<ThridLocation/>} />
+          <Route path="/pet/:id" element={<PetPage/>} />
 
         </Routes>
         <Footer />

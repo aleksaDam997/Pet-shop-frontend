@@ -1,6 +1,7 @@
 import React from "react";
 import { CardImg, Container, Row, Col, Card, Form, Button } from "react-bootstrap";
-import { Navigate } from 'react-router-dom';
+import {AddToCartComponent, AddToCartInput} from '../AddToCart/AddToCartComponent';
+import { Link, Navigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -32,8 +33,9 @@ export class SinglePetProductPreview extends React.Component{
                         <Card.Title as="p">{this.state.pet.name}</Card.Title>
                         <Card.Text>{this.state.pet.excerpt}</Card.Text>
                         <Card.Text>Price: {this.state.pet.retailPrice} EUR</Card.Text>
-                        {/* <AddToCartInput article={this.props.pet}/> */}
-                        {/* <Navigate to={`/pet/${this.props.pet.petId}`} className="btn btn-primary btn-block  btn-sm">Open article page...</Navigate> */}
+                        <AddToCartInput pet={this.state.pet}></AddToCartInput>
+                        <br />
+                        <Link to={`/pet/${this.props.pet.petId}`} className="btn btn-secondary btn-block  btn-sm">Open Pet page...</Link>
                     </Card.Body>
                 </Card>
             </Col>
