@@ -12,8 +12,12 @@ export class SinglePetProductPreview extends React.Component{
         this.state = {
             pet: this.props.pet
         }
+    }
 
-        console.log(this.state.pet.photoPath);
+    componentDidUpdate(){
+        Object.assign(this.state, {
+            pet: this.props.pet
+        })
     }
 
     render(){
