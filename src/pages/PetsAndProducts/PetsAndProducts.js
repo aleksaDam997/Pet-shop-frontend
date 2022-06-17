@@ -19,6 +19,7 @@ export default class PetsAndProducts extends React.Component {
             keywords: "",
             sortBy: "SORT_BY_NAME_ASC",
             pets: [],
+            photos: [],
             categories: [],
             selectedCategoryId: 0,
             animals: [],
@@ -29,11 +30,9 @@ export default class PetsAndProducts extends React.Component {
     }
 
     componentDidMount(){
-        this.getAllPets();
+        this.applyFilters();
         this.fetchPetCategories();
     }
-
-    
 
     async applyFilters() {
 
@@ -47,9 +46,10 @@ export default class PetsAndProducts extends React.Component {
             breedId: this.state.selectedBreedId
         }
 
-        await api.api("api/user/pet/search", 'post', objectFilter).then(res => {
+        let petts = [];
+        const photoDestination = ApiConfig.baseUrl + "resources/pet/"
 
-            let petts = [];
+        await api.api("api/user/pet/search", 'post', objectFilter).then(res => {
 
             res.data.map(pet => {
 
@@ -63,25 +63,15 @@ export default class PetsAndProducts extends React.Component {
                         vendorPrice: pet.vendorPrice,
                         retailPrice: pet.retailPrice,
                         discount: pet.discount,
-                        photoPath: ""
+                        photoPath: photoDestination + pet.photos[0].path
                     }
                 )
             });
-
-            
-
-            let path = ApiConfig.baseUrl + "resources/pet/";
-
-        petts.map(async (pet, index) => {
-            await api.api("api/user/get/photos/pet/" + pet.petId, "get", {}).then(res => {
-                petts[index].photoPath = path + res.data[0].path;
-            });
-        })
-
-            this.setState(Object.assign(this.state, {
-                pets: petts
-            }));
         });
+
+        this.setState(Object.assign(this.state, {
+            pets: petts
+        }));
         
     }
 
@@ -144,45 +134,6 @@ export default class PetsAndProducts extends React.Component {
         )
     }
 
-
-
-    async getAllPets() {
-    
-        await api.api("api/user/get/pet", "get", {}).then(res => {
-                        
-            let petts = [];
-
-                res.data.map(pet => {
-
-                    petts.push(
-                        {
-                            petId: pet.petId,
-                            name: pet.name,
-                            excerpt: pet.excerpt,
-                            age: pet.age,
-                            color: pet.color,
-                            vendorPrice: pet.vendorPrice,
-                            retailPrice: pet.retailPrice,
-                            discount: pet.discount,
-                            photoPath: ""
-                        }
-                    )
-                });
-
-                let path = ApiConfig.baseUrl + "resources/pet/";
-
-            petts.map((pet, index) => {
-                api.api("api/user/get/photos/pet/" + pet.petId, "get", {}).then(res => {
-                    petts[index].photoPath = path + res.data[0].path;
-                });
-            })
-
-                this.setState(Object.assign(this.state, {
-                    pets: petts
-                }));
-        });
-    }
-
     render() {
       return (
         <Container>
@@ -222,7 +173,7 @@ export default class PetsAndProducts extends React.Component {
                 {
                     this.state.pets.map(pet => {
                         return (
-                            <SinglePetProductPreview pet={pet} />
+                            <SinglePetProductPreview key={pet.petId} pet={pet} />
                         );
                     })
                 }

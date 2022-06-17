@@ -15,18 +15,34 @@ export class SinglePetProductPreview extends React.Component{
         }
     }
 
+    componentDidMount() {
+        this.setState(
+            Object.assign(
+                this.state, {
+                    pet: {
+                        petId: this.props.pet.petId,
+                        name: this.props.pet.name,
+                        excerpt: this.props.pet.excerpt,
+                        photoPath: this.props.pet.photoPath,
+                        retailPrice: this.props.pet.retailPrice
+                    } 
+                }
+            )
+        )
+    }
+
     componentDidUpdate(){
 
         Object.assign(this.state, {
-            pet: this.props.pet
+            pet: {
+                petId: this.props.pet.petId,
+                name: this.props.pet.name,
+                excerpt: this.props.pet.excerpt,
+                photoPath: this.props.pet.photoPath,
+                retailPrice: this.props.pet.retailPrice
+            } 
         })
     }
-    
-    // componentDidUpdate(prevProps, prevState) {
-    //     if (prevState.pokemons !== this.state.pokemons) {
-    //       console.log('pokemons state has changed.')
-    //     }
-    //   }
 
     render(){
         return(
