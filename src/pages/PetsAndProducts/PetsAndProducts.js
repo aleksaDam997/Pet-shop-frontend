@@ -14,7 +14,7 @@ export default class PetsAndProducts extends React.Component {
         super(props);
 
         this.state = {
-            minPrice: 0.01,
+            minPrice: 0.1,
             maxPrice: 9999.9,
             keywords: "",
             sortBy: "SORT_BY_NAME_ASC",
@@ -32,6 +32,8 @@ export default class PetsAndProducts extends React.Component {
         this.getAllPets();
         this.fetchPetCategories();
     }
+
+    
 
     async applyFilters() {
 
@@ -70,8 +72,8 @@ export default class PetsAndProducts extends React.Component {
 
             let path = ApiConfig.baseUrl + "resources/pet/";
 
-        petts.map((pet, index) => {
-            api.api("api/user/get/photos/pet/" + pet.petId, "get", {}).then(res => {
+        petts.map(async (pet, index) => {
+            await api.api("api/user/get/photos/pet/" + pet.petId, "get", {}).then(res => {
                 petts[index].photoPath = path + res.data[0].path;
             });
         })
@@ -80,7 +82,7 @@ export default class PetsAndProducts extends React.Component {
                 pets: petts
             }));
         });
-        console.log(this.state.pets);
+        
     }
 
     async fetchBreeds() {
@@ -251,7 +253,7 @@ export default class PetsAndProducts extends React.Component {
             }
             <Form.Group>
                 <Form.Label htmlFor="keywords">Pretraži po ključnim riječima: </Form.Label>
-                <Form.Control type="text" id="keywords" value={this.state.keywords} onChange={(e) => this.keywordChanged(e)}></Form.Control>
+                <Form.Control placeholder="npr. Domaci pas" type="text" id="keywords" value={this.state.keywords} onChange={(e) => this.keywordChanged(e)}></Form.Control>
             </Form.Group>
             <br />
             <Form.Group>
@@ -259,7 +261,7 @@ export default class PetsAndProducts extends React.Component {
                     <Col xs="12" sm="6">
                     <Form.Label htmlFor="priceMin">Min. cijena: </Form.Label>
                     <Form.Control type="number" id="priceMin" 
-                    min="0.01" max="99999.99" step="0.01" value={this.state.minPice} onChange={(e) => this.minPriceChanged(e)}></Form.Control>
+                    min="0.00" max="99999.99" step="0.01" value={this.state.minPrice} onChange={(e) => this.minPriceChanged(e)}></Form.Control>
                     </Col>
                     <Col xs="12" sm="6">
                     <Form.Label htmlFor="priceMax">Max. cijena: : </Form.Label>

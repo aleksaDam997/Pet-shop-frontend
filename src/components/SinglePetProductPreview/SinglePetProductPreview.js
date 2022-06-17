@@ -16,10 +16,17 @@ export class SinglePetProductPreview extends React.Component{
     }
 
     componentDidUpdate(){
+
         Object.assign(this.state, {
             pet: this.props.pet
         })
     }
+    
+    // componentDidUpdate(prevProps, prevState) {
+    //     if (prevState.pokemons !== this.state.pokemons) {
+    //       console.log('pokemons state has changed.')
+    //     }
+    //   }
 
     render(){
         return(
@@ -27,7 +34,7 @@ export class SinglePetProductPreview extends React.Component{
                 <Card className="mb-3" bg="light" text="light">
                     <Card.Header>
                         {/* <img alt={pet.name} src={this.state.pet.photoPath}></img> */}
-                        <CardImg width="200px" height="160px" src={this.state.pet.photoPath} alt={this.state.pet.name} />
+                        <CardImg key={Date.now()} width="200px" height="160px" src={this.state.pet.photoPath} alt={this.state.pet.name} />
                     </Card.Header>
                     <Card.Body>
                         <Card.Title as="p">{this.state.pet.name}</Card.Title>
@@ -35,7 +42,8 @@ export class SinglePetProductPreview extends React.Component{
                         <Card.Text>Price: {this.state.pet.retailPrice} EUR</Card.Text>
                         <AddToCartInput pet={this.state.pet}></AddToCartInput>
                         <br />
-                        <Link to={`/pet/${this.props.pet.petId}`} className="btn btn-secondary btn-block  btn-sm">Open Pet page...</Link>
+                        <Link to={`/pet/${this.props.pet.petId}`} className="btn btn-primary btn-block  btn-sm"
+                        style={{width: '100%'}}>Open Pet page...</Link>
                     </Card.Body>
                 </Card>
             </Col>
