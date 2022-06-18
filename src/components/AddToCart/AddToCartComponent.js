@@ -47,7 +47,7 @@ export class AddToCartInput extends React.Component {
                     <Col xs="5">
                         <Button variant="secondary" block
                                 onClick={ () => this.addToCart() }>
-                            Buy
+                            Kupi
                         </Button>
                     </Col>
                 </Row>

@@ -7,9 +7,14 @@ import { AddToCartInput } from "../AddToCart/AddToCartComponent";
 import { ApiConfig } from "../../config/ApiConfig";
 import { useParams } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ImageSliderComponent from "../ImageSliderComponent/ImageSliderComponent";
+import './pet_page.css';
+
 
 
     export const PetPage = () => {
+
+        const photoPath = ApiConfig.baseUrl + "resources/pet/";
 
         const [pet, setPet] = useState({
             petId: 0,
@@ -55,9 +60,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
             const fetchPhotos = async () => {
                 await api.api("api/user/get/photos/pet/" + id, 'get', {}).then(res => {
-                    
+
                     res.data.map(photo => {
-                        setPhotos([
+                        setPhotos(photos => [
                             ...photos, {
                                 photoId: photo.photoId,
                                 path: photo.path
@@ -85,7 +90,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
                         <Row>
                             <Col xs="12" lg="8">
                                 <div className="excerpt" mb-1>
-                                    {pet?.except}
+                                    {pet?.excerpt}
                                 </div>
                                 <hr style={{backgroundColor: '#DDDDDD'}}/>
                                 <div className="description mb-3">
@@ -94,11 +99,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
                                 <Table className="m-1" bordered variant="secondary">
                                     <thead>
                                         <tr>
-                                            <th className="text-center" colSpan={2}>Features</th>
+                                            <th className="text-center" colSpan={2}>Osobine</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                          
+
                                     </tbody>
                                 </Table>
                                 <div className="mt-3">Promoted: </div>
@@ -136,19 +141,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
                     </Card.Body>
                     <Modal size="lg" centered show={imageModalVisible} onHide={() => setImageModalVisible(false)}>
-                        <Modal.Header className="text-center">
-                               <strong>{pet?.name + " photo " }</strong> 
+                        <Modal.Header className="text-center" closeButton>
+                               <strong>{pet?.name + " slike " }</strong> 
                         </Modal.Header>
-                        <Modal.Body style={{display: 'inline-block', border: '3px solid black'}}>
-                        {photos.map(photo => {
-                                return(
-                                    <img src={ApiConfig.baseUrl + 'resources/pet/' + photo.path }
-                                alt={'Image-' + pet.petId}
-                                style={{width: '320px', height: '240px', border: '3px solid #DDDDDD'}} className="w-100 mb-1"/>
-                                );
-                            })}
-                            <Button style={{position: 'absolute', left:'0%', top: '50%'}}>{"<"}</Button>
-                            <Button style={{position: 'absolute', right: '0%', top: '50%'}}>{">"}</Button>
+
+                        <Modal.Body>
+
+                            <ImageSliderComponent photoPath={photoPath} photos={photos}></ImageSliderComponent>
+
                         </Modal.Body>
                     </Modal>
                 </Card>

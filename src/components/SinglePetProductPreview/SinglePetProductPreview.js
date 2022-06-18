@@ -3,6 +3,7 @@ import { CardImg, Container, Row, Col, Card, Form, Button } from "react-bootstra
 import {AddToCartComponent, AddToCartInput} from '../AddToCart/AddToCartComponent';
 import { Link, Navigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './single_pet_preview.css';
 
 
 export class SinglePetProductPreview extends React.Component{
@@ -24,6 +25,7 @@ export class SinglePetProductPreview extends React.Component{
                         name: this.props.pet.name,
                         excerpt: this.props.pet.excerpt,
                         photoPath: this.props.pet.photoPath,
+                        discount: this.props.pet.discount,
                         retailPrice: this.props.pet.retailPrice
                     } 
                 }
@@ -47,15 +49,17 @@ export class SinglePetProductPreview extends React.Component{
     render(){
         return(
             <Col lg="4" md="6" sm="6" xs="12">
-                <Card className="mb-3" bg="light" text="light">
-                    <Card.Header>
+                <Card className="mb-3">
+                    <div className="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
                         {/* <img alt={pet.name} src={this.state.pet.photoPath}></img> */}
-                        <CardImg key={Date.now()} width="200px" height="160px" src={this.state.pet.photoPath} alt={this.state.pet.name} />
-                    </Card.Header>
+                        <Card.Img key={Date.now()} width="200px" height="160px" src={this.state.pet.photoPath} alt={this.state.pet.name} />
+                        {/* <Card.ImgOverlay>
+                            <Card.Text className={this.state.pet.discount ? 'promoted': 'd-none'}>{this.state.pet.discount * 100}% popust</Card.Text>
+                        </Card.ImgOverlay>     */}
+                    </div>
                     <Card.Body>
-                        <Card.Title as="p">{this.state.pet.name}</Card.Title>
                         <Card.Text>{this.state.pet.excerpt}</Card.Text>
-                        <Card.Text>Price: {this.state.pet.retailPrice} EUR</Card.Text>
+                        <Card.Text className="bold">Cijena: {this.state.pet.discount ? (this.state.pet.retailPrice - this.state.pet.retailPrice * this.state.pet.discount) : this.state.pet.retailPrice} KM</Card.Text>
                         <AddToCartInput pet={this.state.pet}></AddToCartInput>
                         <br />
                         <Link to={`/pet/${this.props.pet.petId}`} className="btn btn-primary btn-block  btn-sm"
