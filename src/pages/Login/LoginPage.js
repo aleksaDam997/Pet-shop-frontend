@@ -41,29 +41,32 @@ export default class Prijava extends Component {
             email: this.state.email,
             password: this.state.password 
         }).then(res => {
-
-
-           this.setState(Object.assign(this.state, Object.assign(this.state.errorMessage, {
-               error: true,
-               message: "Neka poruka"
-           })))
-
-          
             
             this.setState(Object.assign(this.state, 
                 {isLoggedIn: true
                 }));
+
+
+                console.log(res.data);
+                console.log(this.state.isLoggedIn);
         }).catch(err => {
             
             console.log("Greska");
         })
         
       }
+
+      setErrorMessage(message) {
+        this.setState(Object.assign(this.state, Object.assign(this.state.errorMessage, {
+            error: true,
+            message: message
+        })))
+      }
       
   render() {
 
-    if(this.state.isLoggedId){
-        <Navigate to="/" />
+    if(this.state.isLoggedIn === true){
+           return <Navigate to="/" replace={true} />
     }
 
     return (

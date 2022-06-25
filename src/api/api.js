@@ -36,6 +36,39 @@ export function api(path, method, body){
   
 }
 
+export function apiToken(path, method, body){
+
+    const fullPath = ApiConfig.baseUrl + path
+
+    return new Promise((resolve) => {
+      
+      const requestData = {
+          method: method,
+          url: fullPath,
+          data: JSON.stringify(body),
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': getToken()            
+          }
+      };
+
+      console.log(requestData.headers)
+
+      axios(requestData)
+      .then(res => responseHandler(res, resolve))
+      .catch(async err => {
+ 
+          const response = {
+              status: 'error',
+              data: err
+          };
+
+          return resolve(response);
+      });
+  });
+  
+}
+
 export function login({email, password}) {
 
     return new Promise((resolve) => {
@@ -205,5 +238,6 @@ function saveToken(token){
 }
 
 function getToken(){
-  return "";
+    console.log(localStorage.getItem("access_token"));
+  return "Bearer " + localStorage.getItem("access_token");
 }

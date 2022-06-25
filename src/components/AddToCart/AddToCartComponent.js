@@ -21,18 +21,17 @@ export class AddToCartInput extends React.Component {
     }
 
     addToCart() {
+
+        const petId = this.props.pet?.petId;
+
         const data = {
-            petId: this.props.pet?.petId,
-            quantity: this.state.quantity,
+            quantity: this.state.quantity
         };
 
-        api('api/user/cart/add/pet/{petId}', 'post', data)
+        api.apiToken('api/user/add/cart/pet/' +  petId, 'post', data)
         .then((res) => {
-            if (res.status === 'error' || res.status === 'login') {
-                return;
-            }
 
-            window.dispatchEvent(new CustomEvent('cart.update'));
+            console.log(res);
         });
     }
 

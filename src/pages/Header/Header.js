@@ -3,6 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Nav, Form, Navbar, Button, FormControl } from 'react-bootstrap';
 import mySvg from '../../img/logo-pet-shop.svg';
 import './Header.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 
 export default class header extends Component {
 
@@ -23,7 +25,8 @@ export default class header extends Component {
                     <Nav className="me-auto">
                       <Nav.Link href="#home">Home</Nav.Link>
                       <Nav.Link href="/pats-and-products">Ljubimci</Nav.Link>
-                      <Form className="d-flex">
+                      <Nav.Link href="/cart"><FontAwesomeIcon icon={faCartPlus} /></Nav.Link>
+                      {/* <Form className="d-flex">
                         <FormControl
                               type="search"
                               placeholder="Search"
@@ -31,7 +34,7 @@ export default class header extends Component {
                               aria-label="Search"
                         />
                         <Button variant="outline-success">Search</Button>
-                      </Form>
+                      </Form> */}
                     </Nav>
                 </Navbar.Collapse>
                 <Navbar.Collapse className="justify-content-end">

@@ -14,6 +14,7 @@ import FirstLocation from "./pages/Location/FirstLocation";
 import SecondLocation from "./pages/Location/SecondLocation";
 import ThridLocation from "./pages/Location/ThridLocation";
 import { PetPage } from "./components/PetPage/PetPage";
+import { CartPage } from "./pages/Cart/Cart";
 
 
 
@@ -34,7 +35,7 @@ function App() {
           <Route path="druga-prodavnica" element={<SecondLocation/>} />
           <Route path="treca-prodavnica" element={<ThridLocation/>} />
           <Route path="/pet/:id" element={<PetPage/>} />
-
+          <Route path="cart" element={<CartPage />} />
         </Routes>
         <Footer />
       </BrowserRouter>
