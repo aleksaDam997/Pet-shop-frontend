@@ -5,6 +5,7 @@ import mySvg from '../../img/logo-pet-shop.svg';
 import './Header.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
+import { CartPage } from '../Cart/Cart';
 
 export default class header extends Component {
 
@@ -25,16 +26,8 @@ export default class header extends Component {
                     <Nav className="me-auto">
                       <Nav.Link href="#home">Home</Nav.Link>
                       <Nav.Link href="/pats-and-products">Ljubimci</Nav.Link>
-                      <Nav.Link href="/cart"><FontAwesomeIcon icon={faCartPlus} /></Nav.Link>
-                      {/* <Form className="d-flex">
-                        <FormControl
-                              type="search"
-                              placeholder="Search"
-                              className="me-2"
-                              aria-label="Search"
-                        />
-                        <Button variant="outline-success">Search</Button>
-                      </Form> */}
+                      {/* <Nav.Link href="/cart"><FontAwesomeIcon icon={faCartPlus} /></Nav.Link> */}
+                      <CartPage />
                     </Nav>
                 </Navbar.Collapse>
                 <Navbar.Collapse className="justify-content-end">

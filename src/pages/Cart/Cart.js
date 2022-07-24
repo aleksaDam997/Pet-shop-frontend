@@ -12,23 +12,59 @@ export class CartPage extends React.Component{
         super(props);
 
         this.state = {
-            quantity: 1,
+            cart: {
+            },
+            quantity: 0,
+            pets: [],
             visible: false,
             message: ''
         }
     }
 
     componentDidMount(){
-        this.updateCart();
         window.addEventListener('cart.update', () => this.updateCart());
+        this.updateCart();
     }
 
     componentWillMount(){
+        
         window.removeEventListener('cart.update', () => this.updateCart());
     }
 
+    // componentDidUpdate() {
+    //     this.updateCart();
+    // }
+
+
     setStateCart(newCart){
+
+        let petts = [];
+
+        newCart.pets.map(pet => {
+			
+            petts.push(
+                {
+                    petId: pet.petId,
+                    name: pet.name,
+                    vendorPrice: pet.vendorPrice,
+                    retailPrice: pet.retailPrice,
+                    discount: pet.discount,
+                    age: pet.age,
+                    quantity: pet.quantity
+                }
+            )
+        })
+
+        newCart.pets = petts;
+
+
         this.setState(Object.assign(this.state, {cart: newCart}));
+        this.setState(Object.assign(
+            this.state, {
+                pets: petts
+            }
+        ))
+
     }
 
     setStateQuantity(newQuantity){
@@ -55,58 +91,28 @@ export class CartPage extends React.Component{
     }
 
     updateCart(){
-        api('/api/user/cart', 'get', {}).then((res) => {
+        api.apiToken('api/user/get/last/active/cart/', 'get', {}).then((res) => {
             if(res.status === 'error' || res.status === 'login'){
                 this.setStateQuantity(0);
                 this.setStateCart(undefined);
                 return;
             }
 
+
             this.setStateCart(res.data);
-            this.setStateQuantity(res.data.cartArticles.length);
+
         });
     }
 
-    updateQuantity(event){
-        
-        const articleId = event.target.dataset.articleId;
-        const value = event.target.value;
+    deleteFromCart(petId){
 
-        const data = {
-            articleId: Number(articleId),
-            quantity: Number(value)
-        }
-
-        this.manageCart(data);
-    }
-
-    manageCart(data){
-        
-        api('/api/user/cart/', 'patch', data).then((res) =>{
-           
-            if(res.status === 'error' || res.status === 'login'){
-                this.setStateQuantity(0);
-                this.setStateCart(undefined);
-                return;
-            }
-
-            this.setStateCart(res.data);
-            this.setStateQuantity(res.data.cartArticles.length);
-        });
-    }
-
-    deleteFromCart(articleId){
-
-        const data = {
-            articleId: articleId,
-            quantity: 0
-        }
-
-        this.manageCart(data);
+        api.api("api/user/delete/cartItem/cart/" + this.state.cart.cartId + "/pet/" + petId, "delete", {}).then(res => {
+            console.log(res.data);
+        })
     }
 
     makeAnOrder(){
-        api('/api/user/cart/makeAnOrder', 'post', {}).then((res) => {
+        api.apiToken('api/user/create/order/', 'post', {}).then((res) => {
             if(res.status === 'error' || res.status === 'login'){
                 this.setStateQuantity(0);
                 this.setStateCart(undefined);
@@ -124,12 +130,12 @@ export class CartPage extends React.Component{
      
         let summ = 0;
 
-        if(typeof this.state.cart == undefined){
+        if(typeof this.state.pets == undefined){
             return summ;
         }else{
 
-            this.state.cart?.cartArticles.map(item => {
-                summ += item.article.articlePrices[item.article.articlePrices.length - 1].price * item.quantity;
+            this.state.pets?.map(pet => {
+                summ += pet.quantity * (pet.vendorPrice - pet.vendorPrice * pet.discount);
             });
         }
         return summ;
@@ -140,37 +146,51 @@ export class CartPage extends React.Component{
             <Table hover size="sm">
                  <thead>
                      <tr>
-                         <th>Category</th>
-                         <th>Article</th>
-                         <th>Quantity</th>
-                         <th>Price</th>
-                         <th>Total</th>
-                         <th></th>
+                         <th className="text-center">Ime</th>
+                         <th className="text-center">Starost</th>
+                         <th className="text-center">Količina</th>
+                         <th className="text-center">Cijena</th>
+                         <th className="text-center">Ukupno</th>
+                         <th className="text-center"></th>
                      </tr>
                  </thead>
                  <tbody>
-                     {this.state.cart?.cartArticles.map(item => {
-                         return(
-                             <tr>
-                                 <td>{item.article.category.name}</td>
-                                 <td>{item.article.name}</td>
-                             <td><Form.Control type="number" data-article-id={item.article.articleId} value={Number(item.quantity)}
-                                  min="1" step="1" onChange={(e) => this.updateQuantity(e)} className="text-center"></Form.Control></td>
-                                 <td>{Number(item.article.articlePrices[item.article.articlePrices.length - 1].price).toFixed(2)} Eur</td>
-                                 <td>{Number(item.article.articlePrices[item.article.articlePrices.length - 1].price * item.quantity).toFixed(2)} Eur</td>
-                /                <td><FontAwesomeIcon icon={faTrashAlt} onClick={() => this.deleteFromCart(item.articleId)} style={{cursor: "pointer"}}></FontAwesomeIcon></td>
-                            </tr>
-                         );
-                     }, this)}
+                    {
+                        this.state.pets.map(pet => {
+                            return(
+                                <tr>
+                                    <td className="text-center">
+                                        {pet.name}
+                                    </td>
+                                    <td className="text-center">
+                                        {pet.age} mjeseca
+                                    </td>
+                                    <td><Form.Control type="number" data-pet-id={pet.petId} value={Number(pet.quantity)}
+                                 min="1" step="1" onChange={(e) => this.updateQuantity(e)} className="text-center"></Form.Control></td>
+                                    <td className="text-center">
+                                        {pet.vendorPrice - pet.vendorPrice * pet.discount} KM
+                                    </td>
+                                    <td className="text-center">
+                                        {
+                                            pet.quantity * (pet.vendorPrice - pet.vendorPrice * pet.discount)
+                                        } KM
+                                    </td>
+                                    <td>
+                                        <Button variant="danger" onClick={() => this.deleteFromCart(pet.petId)}>Izbrisi</Button>
+                                    </td>
+                                </tr>
+                            )
+                        })
+                    }
                  </tbody>
                  <tfoot>
                      <tr>
-                         <td>Total</td>
-                     <td className="text-right">{Number(this.calculateSumm()).toFixed(2)} Eur</td>
+                         <td>Ukupno: </td>
                          <td></td>
                          <td></td>
                          <td></td>
                          <td></td>
+                         <td className="text-right">{Number(this.calculateSumm()).toFixed(2)} KM</td>
                      </tr>
                  </tfoot>
                 
@@ -183,13 +203,13 @@ export class CartPage extends React.Component{
             <>
             <Nav.Item>
                 <Nav.Link active={false} onClick={() => this.showCart()}>
-                    <FontAwesomeIcon icon={faCartArrowDown}></FontAwesomeIcon> ({this.state.quantity})
+                    <FontAwesomeIcon icon={faCartArrowDown}></FontAwesomeIcon> ({this.getTotalQuantity()})
                 </Nav.Link>
             </Nav.Item>
             <Modal size="lg" centered show={this.state.visible} onHide={() => this.hideCart()}>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        Your shoping cart
+                        Korpa :)
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -197,12 +217,52 @@ export class CartPage extends React.Component{
                         <Alert variant='success' className={this.state.message ? '': 'd-none'}>{this.state.message}</Alert>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="primary" onClick={() => this.makeAnOrder()} disabled={this.state.cart?.cartArticles.length === 0}>Make an order</Button>
+                    {/* <Button variant="primary" onClick={() => this.makeAnOrder()} disabled={this.state.cart?.cartItem.length === 0}>Make an order</Button> */}
+                    <Button variant="primary" disabled={(this.state.message != '') ? true : false} onClick={() => this.makeAnOrder()} >Poruči</Button>
                 </Modal.Footer>
-            </Modal>
-            
-            
+            </Modal>         
             </>
         );
+    }
+
+
+
+    updateQuantity(e) {
+
+        let index = 0; 
+
+        for(let i = 0; i < this.state.pets.length; i++) {
+            if(this.state.pets[i].petId === Number(e.target.dataset.petId)){
+                index = i;
+            }
+        }
+
+        this.setState(
+            Object.assign(this.state, Object.assign(this.state.pets[index], {
+                quantity: Number(e.target.value)
+            }))
+        )
+
+
+        api.apiToken("api/user/edit/cart/" + this.state.cart.cartId + "/pet/" + Number(e.target.dataset.petId), 'put', {
+            quantity: this.state.pets.filter(pet => pet.petId === Number(e.target.dataset.petId))[0].quantity
+        }).then((res) => {
+            if(res.status === 'error' || res.status === 'login'){
+                this.setStateQuantity(0);
+                this.setStateCart(undefined);
+                return;
+            }
+
+            console.log(res.data);
+        });
+    }
+
+    getTotalQuantity() {
+        let total = 0;
+        this.state.pets?.map(pet => {
+            total += pet.quantity;
+        });
+
+        return total;
     }
 }

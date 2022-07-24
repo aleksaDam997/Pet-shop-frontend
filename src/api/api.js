@@ -52,8 +52,6 @@ export function apiToken(path, method, body){
           }
       };
 
-      console.log(requestData.headers)
-
       axios(requestData)
       .then(res => responseHandler(res, resolve))
       .catch(async err => {

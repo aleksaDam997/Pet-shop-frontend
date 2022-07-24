@@ -28,10 +28,10 @@ export class AddToCartInput extends React.Component {
             quantity: this.state.quantity
         };
 
-        api.apiToken('api/user/add/cart/pet/' +  petId, 'post', data)
+        api.apiToken('api/user/add/cart-item/pet/' +  petId, 'post', data)
         .then((res) => {
 
-            console.log(res);
+            console.log(res.data);
         });
     }
 
