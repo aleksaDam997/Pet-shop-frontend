@@ -1,0 +1,35 @@
+.status {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: #012970;
+    transition: 0.3;
+    padding: 10px 0 10px 40px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+
+.bi-chevron-down {
+    margin-right: 0;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .status:not(.collapsed) .bi-chevron-down {
+    transform: rotate(180deg);
+  }
+
+  .status i:hover,
+  .status i.active {
+    color: #4154f1;
+  }
+
+  .photo {
+    width: 20px;
+    height: 20px
+  }
+
+.full-height {
+  height: 100%
+}

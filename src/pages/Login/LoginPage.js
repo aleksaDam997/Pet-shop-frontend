@@ -15,6 +15,7 @@ export default class Prijava extends Component {
             email: "",
             password: "",
             isLoggedIn: false,
+            role: "",
             emailMessage: {
                 error: false,
                 message: "Neka poruka"
@@ -46,9 +47,16 @@ export default class Prijava extends Component {
                 {isLoggedIn: true
                 }));
 
+            if(res.data.role_admin !== undefined && res.data.role_admin === "ADMIN"){
+                this.setState(Object.assign(this.state, {
+                    role: res.data.role_admin
+                }));
+            }   else if(res.data.role_user !== undefined && res.data.role_user === "USER"){
+                this.setState(Object.assign(this.state, {
+                    role: res.data.role_user
+                }));
+            }
 
-                console.log(res.data);
-                console.log(this.state.isLoggedIn);
         }).catch(err => {
             
             console.log("Greska");
@@ -65,9 +73,13 @@ export default class Prijava extends Component {
       
   render() {
 
-    if(this.state.isLoggedIn === true){
+    if(this.state.isLoggedIn === true && this.state.role === "USER"){
            return <Navigate to="/" replace={true} />
     }
+
+    if(this.state.isLoggedIn === true && this.state.role === "ADMIN"){
+        return <Navigate to="/administrator_dashboard" replace={true} />
+ }
 
     return (
         <LoginContainer>

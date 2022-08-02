@@ -90,7 +90,7 @@ export function login({email, password}) {
                   status: 'error',
                   data: res.data
               };
-      console.log("Odgovor")
+
               return resolve(response);
           }
           
@@ -110,6 +110,9 @@ export function login({email, password}) {
 
           localStorage.setItem('access_token', res.data.access_token);
           localStorage.setItem('refresh_token', res.data.refresh_token);
+
+          localStorage.setItem('role_admin', res.data.role_admin);
+          localStorage.setItem('role_user', res.data.role_user);
 
 
           return resolve(response);
