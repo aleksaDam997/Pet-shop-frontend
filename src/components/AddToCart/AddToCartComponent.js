@@ -40,7 +40,7 @@ export class AddToCartInput extends React.Component {
             <Form.Group>
                 <Row>
                     <Col xs="7">
-                        <Form.Control type="number" min="1" step="1" value={ this.state.quantity }
+                        <Form.Control className='text-center' type="number" min="1" step="1" value={ this.state.quantity }
                                         onChange={ (e) => this.quantityChanged(e) } />
                     </Col>
                     <Col xs="5">

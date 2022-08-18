@@ -3,7 +3,7 @@ import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
 import { FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './PetsAndProducts.css';
-import { faArchway, faDog, faListAlt, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faArchway, faDog, faListAlt, faSearch, faVenusMars } from "@fortawesome/free-solid-svg-icons";
 import * as api from "../../api/api";
 import {SinglePetProductPreview} from "../../components/SinglePetProductPreview/SinglePetProductPreview";
 import { ApiConfig } from "../../config/ApiConfig";
@@ -14,7 +14,7 @@ export default class PetsAndProducts extends React.Component {
         super(props);
 
         this.state = {
-            minPrice: 0.1,
+            minPrice: 0.01,
             maxPrice: 9999.9,
             keywords: "",
             sortBy: "SORT_BY_NAME_ASC",
@@ -25,7 +25,8 @@ export default class PetsAndProducts extends React.Component {
             animals: [],
             selectedAnimalId: 0,
             breeds: [],
-            selectedBreedId: 0
+            selectedBreedId: 0,
+            sex: ""
         }
     }
 
@@ -41,6 +42,7 @@ export default class PetsAndProducts extends React.Component {
             minPrice: this.state.minPrice,
             maxPrice: this.state.maxPrice,
             sortBy: this.state.sortBy,
+            sex: this.state.sex,
             categoryId: this.state.selectedCategoryId,
             animalId: this.state.selectedAnimalId,
             breedId: this.state.selectedBreedId
@@ -202,6 +204,15 @@ export default class PetsAndProducts extends React.Component {
             {
              this.renderBreedSelect()
             }
+            <Form.Group className="mt-2" onChange={(e) => this.radioGroupChanged(e)}>   
+                <Form.Label className="d-block">Pol: <FontAwesomeIcon icon={faVenusMars} /></Form.Label>
+                <Form.Label forHtml="MALE">Muški: </Form.Label>
+                <input className="radio-group" id="MALE" type="radio" value="MALE" name="sex" />
+                <br />
+                <Form.Label forHtml="FEMALE">Ženski: </Form.Label>
+                <input className="radio-group" id="FEMALE" type="radio" value="FEMALE" name="sex" />
+            </Form.Group >
+            <br />
             <Form.Group>
                 <Form.Label htmlFor="keywords">Pretraži po ključnim riječima: </Form.Label>
                 <Form.Control placeholder="npr. Domaci pas" type="text" id="keywords" value={this.state.keywords} onChange={(e) => this.keywordChanged(e)}></Form.Control>
@@ -339,6 +350,12 @@ export default class PetsAndProducts extends React.Component {
     sortSelectChanged(e) {
         this.setState(Object.assign(this.state, {
             sortBy: e.target.value
+        }))
+    }
+
+    radioGroupChanged(e) {
+        this.setState(Object.assign(this.state, {
+            sex: e.target.value
         }))
     }
   }

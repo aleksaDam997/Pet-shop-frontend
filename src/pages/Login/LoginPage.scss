@@ -1,3 +1,11 @@
-.page-height {
-    height: 100vh;
+
+.bg-login {
+    background-image: url("../../img/modal/add_modal_bg.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bg-dimmed {
+    background-color: rgba($color: #dddddd, $alpha: 0.5);
 }

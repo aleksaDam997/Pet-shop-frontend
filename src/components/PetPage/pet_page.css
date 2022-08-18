@@ -1,13 +1,22 @@
-.description {
 
-
-}
 
 .excerpt {
     font-weight: bold;
+    margin-top: 25px;
+}
+
+.title-pet-page {
+    font-family: "Lucida Handwriting";
+    font-size: 24px;
+    margin-top: 5px;
+
 }
 
 
-.promoted {
-    
+.image:hover {
+    border: 2px solid #dddddd;
+}
+
+.description {
+    font-weight: bold;
 }

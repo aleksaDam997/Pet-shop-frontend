@@ -1,0 +1,18 @@
+.radio-group {
+    margin-left: 5px;
+}
+
+.add_modal_bg {
+    background-position: center;
+    background-size: 100%;
+    background-image: url("../../img/modal/edit_modal_bg.jpg");
+}
+
+.select {
+    width: 33%;
+}
+
+.page-height {
+    min-height: calc(100vh - 120px) !important;
+
+}

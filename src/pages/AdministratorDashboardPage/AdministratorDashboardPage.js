@@ -9,6 +9,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { ApiConfig } from '../../config/ApiConfig';
 import "./AdministratorDashboardPage.css";
 import Chart from "react-apexcharts";
+import { toHaveDisplayValue } from '@testing-library/jest-dom/dist/matchers';
 
 export default class AdministratorDashboardPage extends Component {
 
@@ -17,6 +18,7 @@ export default class AdministratorDashboardPage extends Component {
 
     this.state = {
       orders: [],
+      status: "PENDING",
       options: {
         chart: {
           id: "basic-bar"
@@ -44,7 +46,6 @@ export default class AdministratorDashboardPage extends Component {
         orders: res.data
       } 
         ));
-        console.log(res.data)
     });
 
 
@@ -55,12 +56,21 @@ export default class AdministratorDashboardPage extends Component {
     return (
       <Container>
         <Row>
-          <Col xs="12" md="4" lg="3">
+          <Col xs="12" md="4" lg="3" style={{borderLeft: "1px solid #dddddd"}}>
             <SideMenuComponent />
           </Col>
-          <Col xs="12" md="8" lg="9">
+          <Col xs="12" md="8" lg="9" className="bg-light">
           <div className="d-block mt-3 text-center mb-3">
              <h2 className="text-secondary"> <i class="bi bi-pencil-square"></i> &emsp; Upravljanje porudžbama korisnika </h2>
+          </div>
+          <div className='d-flex justify-content-center'>
+              <select className="form-select select-filter" aria-label="Default select example 2" onClick={(e) => this.setStatusChanged(e)}>
+                <option value="PENDING">Neriješen</option>
+                <option value="ACCEPTED">Prihvaćen</option>
+                <option value="REJECTED">Odbijen</option>
+                <option value="SHIPPED">Isporučeno</option>
+              </select>
+              <button className="btn btn-primary" onClick={() => this.getOrdersByStatus()}><i className="bi bi-search"></i> Filtriraj</button>
           </div>
             <Table className='text-center'>
               <thead>
@@ -117,15 +127,22 @@ export default class AdministratorDashboardPage extends Component {
                       new Date(order.createdAt).getDate()
                       }.
                       {
-                      new Date(order.createdAt).getDay()
+                      new Date(order.createdAt).getMonth()
                       }.
                       {
                       new Date(order.createdAt).getFullYear()
                       } 
-{/* &emsp; */}
+                    &emsp;
+                    {
+                    new Date(order.createdAt).getHours()
+                    }
+                    :
+                    {
+                        new Date(order.createdAt).getMinutes()
+                    }
                     </td>
                     <td>
-                      <select class={`form-select text-light ${order.status === "PENDING" ? 'bg-info' : ""} ${order.status === "ACCEPTED" ? 'bg-warning' : ""} ${order.status === "REJECTED" ? 'bg-danger' : ""} ${order.status === "SHIPPED" ? 'bg-success' : ""}`} aria-label="Default select example" onChange={(e) => this.statusChanged(order.userOrderId, e)}>
+                      <select class={`form-select text-light ${order.status === "PENDING" ? 'bg-secondary' : ""} ${order.status === "ACCEPTED" ? 'bg-info' : ""} ${order.status === "REJECTED" ? 'bg-danger' : ""} ${order.status === "SHIPPED" ? 'bg-success' : ""}`} aria-label="Default select example" onChange={(e) => this.statusChanged(order.userOrderId, e)}>
                         <option value="PENDING" selected={order.status === "PENDING" ? true : false}>Neriješen</option>
                         <option value="ACCEPTED" selected={order.status === "ACCEPTED" ? true : false}>Prihvaćen</option>
                         <option value="REJECTED" selected={order.status === "REJECTED" ? true : false}>Odbijen</option>
@@ -201,5 +218,21 @@ export default class AdministratorDashboardPage extends Component {
 
     this.getOrders();
 
+  }
+
+  getOrdersByStatus() {
+    api.api('api/admin/get/order/status', 'post', {
+      status: this.state.status
+    }).then(res => {
+      this.setState(Object.assign(this.state, {
+        orders: res.data
+      } 
+        ));
+    });
+  }
+
+  setStatusChanged(e) {
+    this.setState(Object.assign(this.state, 
+      {status: e.target.value}))
   }
 }

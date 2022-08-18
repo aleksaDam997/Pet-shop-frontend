@@ -31,31 +31,38 @@ export class CartPage extends React.Component{
         window.removeEventListener('cart.update', () => this.updateCart());
     }
 
-    // componentDidUpdate() {
-    //     this.updateCart();
-    // }
+//    componentDidUpdate() {
+//        this.updateCart();
+//    }
 
 
     setStateCart(newCart){
 
         let petts = [];
 
-        newCart.pets.map(pet => {
-			
-            petts.push(
-                {
-                    petId: pet.petId,
-                    name: pet.name,
-                    vendorPrice: pet.vendorPrice,
-                    retailPrice: pet.retailPrice,
-                    discount: pet.discount,
-                    age: pet.age,
-                    quantity: pet.quantity
-                }
-            )
-        })
 
-        newCart.pets = petts;
+        if(newCart?.pets !== undefined){
+
+            newCart.pets.map(pet => {
+			
+                petts.push(
+                    {
+                        petId: pet.petId,
+                        name: pet.name,
+                        vendorPrice: pet.vendorPrice,
+                        retailPrice: pet.retailPrice,
+                        discount: pet.discount,
+                        age: pet.age,
+                        quantity: pet.quantity,
+                        cartQuantity: pet.cartQuantity
+                        
+                    }
+                )
+            })
+
+            newCart.pets = petts;
+        }
+        
 
 
         this.setState(Object.assign(this.state, {cart: newCart}));
@@ -68,7 +75,7 @@ export class CartPage extends React.Component{
     }
 
     setStateQuantity(newQuantity){
-        this.setState(Object.assign(this.state, {quantity: newQuantity}));
+        this.setState(Object.assign(this.state, {cartQuantity: newQuantity}));
     }
 
     setStateVisible(state){
@@ -135,7 +142,7 @@ export class CartPage extends React.Component{
         }else{
 
             this.state.pets?.map(pet => {
-                summ += pet.quantity * (pet.vendorPrice - pet.vendorPrice * pet.discount);
+                summ += pet.cartQuantity * (pet.vendorPrice - pet.vendorPrice * pet.discount);
             });
         }
         return summ;
@@ -165,14 +172,14 @@ export class CartPage extends React.Component{
                                     <td className="text-center">
                                         {pet.age} mjeseca
                                     </td>
-                                    <td><Form.Control type="number" data-pet-id={pet.petId} value={Number(pet.quantity)}
-                                 min="1" step="1" onChange={(e) => this.updateQuantity(e)} className="text-center"></Form.Control></td>
+                                    <td><Form.Control type="number" data-pet-id={pet.petId} value={Number(pet.cartQuantity)}
+                                 min="1" step="1" max={pet.quantity} onChange={(e) => this.updateQuantity(e)} className="text-center"></Form.Control></td>
                                     <td className="text-center">
                                         {pet.vendorPrice - pet.vendorPrice * pet.discount} KM
                                     </td>
                                     <td className="text-center">
                                         {
-                                            pet.quantity * (pet.vendorPrice - pet.vendorPrice * pet.discount)
+                                            pet.cartQuantity * (pet.vendorPrice - pet.vendorPrice * pet.discount)
                                         } KM
                                     </td>
                                     <td>
@@ -209,7 +216,7 @@ export class CartPage extends React.Component{
             <Modal size="lg" centered show={this.state.visible} onHide={() => this.hideCart()}>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        Korpa :)
+                        <FontAwesomeIcon icon={faCartArrowDown} /> Korpa
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -239,13 +246,13 @@ export class CartPage extends React.Component{
 
         this.setState(
             Object.assign(this.state, Object.assign(this.state.pets[index], {
-                quantity: Number(e.target.value)
+                cartQuantity: Number(e.target.value)
             }))
         )
 
 
         api.apiToken("api/user/edit/cart/" + this.state.cart.cartId + "/pet/" + Number(e.target.dataset.petId), 'put', {
-            quantity: this.state.pets.filter(pet => pet.petId === Number(e.target.dataset.petId))[0].quantity
+            quantity: this.state.pets.filter(pet => pet.petId === Number(e.target.dataset.petId))[0].cartQuantity
         }).then((res) => {
             if(res.status === 'error' || res.status === 'login'){
                 this.setStateQuantity(0);
@@ -260,7 +267,7 @@ export class CartPage extends React.Component{
     getTotalQuantity() {
         let total = 0;
         this.state.pets?.map(pet => {
-            total += pet.quantity;
+            total += pet.cartQuantity;
         });
 
         return total;

@@ -33,3 +33,8 @@
 .full-height {
   height: 100%
 }
+
+.select-filter {
+  max-width: 130px;
+  margin-right: 10px;
+}

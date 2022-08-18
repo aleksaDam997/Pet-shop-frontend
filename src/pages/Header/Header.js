@@ -6,6 +6,7 @@ import './Header.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import { CartPage } from '../Cart/Cart';
+import { OrderPage } from '../Order/OrderPage';
 
 export default class header extends Component {
 
@@ -28,6 +29,7 @@ export default class header extends Component {
                       <Nav.Link href="/pats-and-products">Ljubimci</Nav.Link>
                       {/* <Nav.Link href="/cart"><FontAwesomeIcon icon={faCartPlus} /></Nav.Link> */}
                       <CartPage />
+                      <OrderPage />
                     </Nav>
                 </Navbar.Collapse>
                 <Navbar.Collapse className="justify-content-end">

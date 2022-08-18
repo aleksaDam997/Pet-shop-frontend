@@ -26,8 +26,8 @@ export default function SideMenuComponent() {
                     </a>
                     <ul id="dodaj-nav" className="nav-content collapse" data-bs-parent="#sidebar-nav">
                         <li>
-                            <a href="forms-elements.html">
-                            <i class="bi bi-circle"></i><span>Form Elements</span>
+                            <a href="administrator_dashboard/pets">
+                            <i class="bi bi-circle"></i><span>Ljubimci</span>
                             </a>
                         </li>
                         <li>

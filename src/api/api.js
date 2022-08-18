@@ -121,7 +121,7 @@ export function login({email, password}) {
     });
   }
 
-  export function apiFile(path, name, file, role) {
+  export function apiFile(path, name, file) {
 
     return new Promise((resolve) => {
         const formData = new FormData();
@@ -130,7 +130,7 @@ export function login({email, password}) {
         const requestData = {
             method: 'post',
             url: path,
-            baseURL: ApiConfig.API_URL,
+            baseURL: ApiConfig.baseUrl,
             data: formData,
             // headers: {
             //     'Content-Type': 'multipart/form-data',
@@ -142,7 +142,7 @@ export function login({email, password}) {
         .then(res => responseHandler(res, resolve))
         .catch(async err => {
             if (err.response.status === 401) {
-                const newToken = await refreshToken(role);
+                const newToken = await getRefreshToken();
     
                 if (!newToken) {
                     const response = {
@@ -153,9 +153,9 @@ export function login({email, password}) {
                     return resolve(response);
                 }
     
-                saveToken(newToken, role);
+                saveToken(newToken);
     
-                requestData.headers['Authorization'] = getToken(role);
+                requestData.headers['Authorization'] = getToken();
     
                 return await repeatRequest(requestData, resolve);
             }
@@ -230,15 +230,14 @@ async function repeatRequest(requestData, resolve){
     })
 }
 
-function refreshToken(token) {
-  return token;
+function getRefreshToken() {
+    return "Bearer " + localStorage.getItem("refresh_token");
 }
 
 function saveToken(token){
-
+    localStorage.setItem("access_token", token)
 }
 
 function getToken(){
-    console.log(localStorage.getItem("access_token"));
   return "Bearer " + localStorage.getItem("access_token");
 }

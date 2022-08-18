@@ -49,7 +49,7 @@ export class SinglePetProductPreview extends React.Component{
     render(){
         return(
             <Col lg="4" md="6" sm="6" xs="12">
-                <Card className="mb-3">
+                <Card className="mb-3" >
                     <div className="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
                         {/* <img alt={pet.name} src={this.state.pet.photoPath}></img> */}
                         <Card.Img key={Date.now()} width="200px" height="160px" src={this.state.pet.photoPath} alt={this.state.pet.name} />
@@ -58,8 +58,8 @@ export class SinglePetProductPreview extends React.Component{
                         </Card.ImgOverlay>     */}
                     </div>
                     <Card.Body>
-                        <Card.Text>{this.state.pet.excerpt}</Card.Text>
-                        <Card.Text className="bold">Cijena: {this.state.pet.discount ? (this.state.pet.retailPrice - this.state.pet.retailPrice * this.state.pet.discount) : this.state.pet.retailPrice} KM</Card.Text>
+                        <Card.Text className="bold">{this.state.pet.excerpt}</Card.Text>
+                        <Card.Text className="bold text-danger">Cijena: {this.state.pet.discount ? (this.state.pet.retailPrice - this.state.pet.retailPrice * this.state.pet.discount) : this.state.pet.retailPrice} KM</Card.Text>
                         <AddToCartInput pet={this.state.pet}></AddToCartInput>
                         <br />
                         <Link to={`/pet/${this.props.pet.petId}`} className="btn btn-primary btn-block  btn-sm"
