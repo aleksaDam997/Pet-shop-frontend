@@ -148,25 +148,31 @@ export default function AdministratorAddEditPetPage() {
         const fetchPet = async () => {
             await api.api("api/user/get/pet/" + id, 'get', {}).then(res => {
 
-                setPet({
-                    ...pet,
-                        petId: res.data.petId,
-                        name: res.data.name,
-                        excerpt: res.data.excerpt,
-                        description: res.data.description,
-                        vendorPrice: res.data.vendorPrice,
-                        retailPrice: res.data.retailPrice,
-                        discount: res.data.discount,
-                        sex: res.data.sex,
-                        age: res.data.age,
-                        status: res.data.status,
-                        color: res.data.color,
-                        eyesColor: res.data.eyesColor,
-                        quantity: res.data.quantity
-
-                    }
+                setPet(Object.assign(pet, {
+                    petId: res.data.petId,
+                    name: res.data.name,
+                    excerpt: res.data.excerpt,
+                    description: res.data.description,
+                    vendorPrice: res.data.vendorPrice,
+                    retailPrice: res.data.retailPrice,
+                    discount: res.data.discount,
+                    sex: res.data.sex,
+                    age: res.data.age,
+                    status: res.data.status,
+                    color: res.data.color,
+                    eyesColor: res.data.eyesColor,
+                    quantity: res.data.quantity
+                })
                 )
 
+                setSelected(Object.assign(
+                    selected, {
+                        petCategoryId: res.data.breed.animal.petCategory.petCategoryId,
+                        animalId: res.data.breed.animal.animalId,
+                        breedId: res.data.breed.breedId
+                    }        
+                ))
+                
             });
         }
 
@@ -184,17 +190,22 @@ export default function AdministratorAddEditPetPage() {
             }); 
         }
 
-
-        if(id !== undefined){
-            fetchPet();
-            fetchPhotos();
-        }
-
         fetchPetCategories();
 
+        if(id !== undefined){
+
+            fetchPet();
+            fetchPhotos();
+
+            fetchAnimals();
+            fetchBreeds();
+
+        }
 
 
-    }, []);
+
+
+    }, [selected.petCategoryId, selected.animalId, selected.breedId]);
 
     return (
         <Container>
@@ -220,19 +231,19 @@ export default function AdministratorAddEditPetPage() {
                 <Form.Group className="my-2 me-2" style={{width: "200px"}}>
                 <Form.Label htmlFor="color">Boja:</Form.Label>
                     <Form.Select name="color" id="color" aria-label="Default select example" onChange={(e) => selectColorFormChanged(e)}>
-                        <option value="Crna" > Crna</option>
-                        <option value="Smeđa" > Smeđa</option>
-                        <option value="Bijela" > Bijela</option>
-                        <option value="Žuta" > Žuta</option>
+                        <option value="Crna" selected={pet.color === "Crna" ? true : false}> Crna</option>
+                        <option value="Smeđa" selected={pet.color === "Smeđa" ? true : false}> Smeđa</option>
+                        <option value="Bijela" selected={pet.color === "Bijela" ? true : false}> Bijela</option>
+                        <option value="Žuta" selected={pet.color === "Žuta" ? true : false}> Žuta</option>
                     </Form.Select>
                 </Form.Group> 
                 <Form.Group className="m-2" style={{width: "200px"}}>
                 <Form.Label htmlFor="eyesColor">Boja očiju:</Form.Label>
                     <Form.Select name="eyesColor" id="eyesColor" aria-label="Default select example" onChange={(e) => selectEyeColorFormChanged(e)}>
-                        <option value="Crna" > Crna</option>
-                        <option value="Smeđa" > Smeđa</option>
-                        <option value="Plava" > Bijela</option>
-                        <option value="zelena" > zelena</option>
+                        <option value="Crna" selected={pet.eyesColor === "Crna" ? true : false}> Crna</option>
+                        <option value="Smeđa" selected={pet.eyesColor === "Smeđa" ? true : false}> Smeđa</option>
+                        <option value="Plava" selected={pet.eyesColor === "Plava" ? true : false}> Bijela</option>
+                        <option value="zelena" selected={pet.eyesColor === "zelena" ? true : false}> zelena</option>
                     </Form.Select>
                 </Form.Group> 
                 </dvi>
@@ -249,21 +260,21 @@ export default function AdministratorAddEditPetPage() {
                 <Form.Group className="mt-2" onChange={(e) => radioGroupChanged(e)}>   
                         <Form.Label className="d-block">Pol: <FontAwesomeIcon icon={faVenusMars} /></Form.Label>
                         <Form.Label forHtml="MALE">Muški: </Form.Label>
-                        <input className="radio-group" id="MALE" type="radio" value="MALE" name="sex" />
+                        <input className="radio-group" id="MALE" type="radio" value="MALE" name="sex" checked={pet.sex === "MALE" ? true : false}/>
                         <br />
                         <Form.Label forHtml="FEMALE">Ženski: </Form.Label>
-                        <input className="radio-group" id="FEMALE" type="radio" value="FEMALE" name="sex" />
+                        <input className="radio-group" id="FEMALE" type="radio" value="FEMALE" name="sex" checked={pet.sex === "FEMALE" ? true : false}/>
                 </Form.Group >
                 </Col>
                 <Col>
-                <Form.Group className="my-3">
+                {/* <Form.Group className="my-3">
                     <Form.Label>Izaberi sliku za upload</Form.Label>
                     <Form.Control id='image' type="file" />
-                </Form.Group>
-                {/* <Form.Group controlId="formFileMultiple" className="mb-3">
-                    <Form.Label>Multiple files input example</Form.Label>
-                    <Form.Control type="file" multiple />
                 </Form.Group> */}
+                <Form.Group controlId="formFileMultiple" className="my-3">
+                    <Form.Label>Izaberi sliku za upload</Form.Label>
+                    <Form.Control id="image" type="file" multiple />
+                </Form.Group>
                 </Col>
                 </Row>
                 <Form.Group className="d-flex justify-content-start text-center my-3">
@@ -292,7 +303,7 @@ export default function AdministratorAddEditPetPage() {
                             {
                                 petCategory.map(category => {
                                     return(
-                                        <option value={category.petCategoryId}>{category.name}</option>
+                                        <option value={category.petCategoryId} selected={category.petCategoryId === selected.petCategoryId ? true : false}>{category.name}</option>
                                     );
                                 })
                             }
@@ -312,7 +323,7 @@ export default function AdministratorAddEditPetPage() {
             </Card.Body>
             <Card.Footer>
                 {/* <Button variant="primary" disabled={(this.state.message != '') ? true : false} onClick={() => this.makeAnOrder()} >Sačuvaj izmjene</Button> */}
-                <Button variant="danger" onClick={() => {addPetToDatabase()}}>Sačuvaj izmjene</Button>
+                <Button variant="danger" onClick={() => {saveEditPet()}}>Sačuvaj izmjene</Button>
             </Card.Footer>
         </Card>
         <Modal show={endingModalVisible} centered onHide={() => closeEndingModal()}>
@@ -336,12 +347,23 @@ export default function AdministratorAddEditPetPage() {
     </Container>
     );
 
-    async function addPetToDatabase() {
+    async function saveEditPet() {
 
-        await savePet();
+        if(id !== undefined){
+
+            await editPet();
+
+        }else {
+
+            await savePet();
+            
+        }
+
         await pickPhoto();
 
         setEndingModalVisible(true);
+
+
 
         // setTimeout(() => {
         //     setMessage({
@@ -352,6 +374,44 @@ export default function AdministratorAddEditPetPage() {
 
         //   }, 6000)
     
+    }
+
+    async function editPet() {
+
+        await api.apiToken("api/admin/edit/pet/" + id, "put", {
+            name: pet.name,
+            excerpt: pet.excerpt,
+            description: pet.description,
+            vendorPrice: pet.vendorPrice,
+            retailPrice: pet.retailPrice,
+            discount: pet.discount,
+            sex: pet.sex,
+            age: pet.age,
+            color: pet.color,
+            eyesColor: pet.eyesColor,
+            quantity: pet.quantity,
+            breedId: selected.breedId
+        }).then(res => {
+
+            if(res.status ==="error" || res.status ==="login"){
+
+                setMessage(Object.assign(message, {
+                    pet: "Došlo je do greške, provjerite da li je formular pravilno popunjen, u krajnjem slučaju prijavite se ponovo, te pokušajte dodati ljubimca ponovo.."
+                }))
+
+                return;
+            }
+
+            setMessage(Object.assign(message, {
+                pet: "Ljubimac je uspješno izmjenjen.."
+            }))
+
+            setPet(Object.assign(pet, {
+                petId: res.data.petId
+            }));
+
+            
+        });
     }
 
     async function savePet() {
@@ -395,11 +455,13 @@ export default function AdministratorAddEditPetPage() {
     async function uploadPhoto(petId, file){
 
         await api.apiFile("upload/api/admin/pet/" + petId + "/add/photo", "file", file).then(res => {
+
+            console.log(res);
             
             if(res.status ==="error" || res.status === "login"){
 
                 setMessage(message, {
-                    photo: "Došlo je do greške prilikom dodavanja slike, pokušajte je dodati naknadno u slučaju da je ljubimac uspješno dodat.."
+                    photo: "Došlo je do greške prilikom dodavanja fotografije, pokušajte je dodati naknadno u slučaju da je ljubimac uspješno dodat.."
                 })
                 return;
             }
@@ -407,6 +469,8 @@ export default function AdministratorAddEditPetPage() {
             setMessage(Object.assign(message, {
                 photo: "Fotografija je uspješno dodata.."
             }))
+        }).catch(err => {
+            console.log(err);
         });
 
     }
@@ -415,16 +479,25 @@ export default function AdministratorAddEditPetPage() {
     
         const filePicker = document.getElementById('image');
     
+        let files = [];
+
+        for(let i = 0; i < filePicker.files.length; i++){
+            files.push(filePicker.files[i]);
+        }
+        console.log(files);
+        console.log(filePicker.files);
+
         if (filePicker?.files.length === 0) {
             setMessage(Object.assign(message, {
-                file: "Izaberite sliku za upload.."
+                photo: "Izaberite sliku za upload.."
             }));
 
         return;
         }
     
-        const file = filePicker.files[0];
-        await uploadPhoto(pet.petId, file);
+
+
+        await uploadPhoto(pet.petId, files);
     
     
         // this.getPhotos();
@@ -442,7 +515,7 @@ export default function AdministratorAddEditPetPage() {
                     {
                         animal.map(animal => {
                             return(
-                                <option value={animal.animalId}>{animal.name}</option>
+                                <option value={animal.animalId} selected={animal.animalId === selected.animalId ? true : false}>{animal.name}</option>
                             );
                         })
                     }
@@ -454,7 +527,7 @@ export default function AdministratorAddEditPetPage() {
 }
 
 function renderBreedSelect(){
-    if(breed){
+    if(breed.length > 0){
         return(
             <Form.Group className={selected.animalId !== 0 ? 'd-block select mx-2' : 'd-none'}>
             <Form.Select name="breed" id="breed" aria-label="Default select example" onChange={(e) => selectBreedFormChanged(e)}>
@@ -462,7 +535,7 @@ function renderBreedSelect(){
                 {
                     breed.map(breed => {
                         return(
-                            <option value={breed.breedId}>{breed.name}</option>
+                            <option value={breed.breedId} selected={breed.breedId === selected.breedId ? true : false}>{breed.name}</option>
                         );
                     })
                 }

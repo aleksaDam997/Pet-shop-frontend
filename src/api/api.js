@@ -121,11 +121,15 @@ export function login({email, password}) {
     });
   }
 
-  export function apiFile(path, name, file) {
+  export function apiFile(path, name, files) {
 
     return new Promise((resolve) => {
         const formData = new FormData();
-        formData.append(name, file);
+
+        for(let file of files){
+            formData.append(name, file);
+        }
+        
 
         const requestData = {
             method: 'post',
