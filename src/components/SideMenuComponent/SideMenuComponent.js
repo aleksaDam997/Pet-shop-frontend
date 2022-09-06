@@ -30,7 +30,7 @@ export default function SideMenuComponent() {
                             <i class="bi bi-circle"></i><span>Ljubimci</span>
                             </a>
                         </li>
-                        <li>
+                        {/* <li>
                             <a href="forms-layouts.html">
                             <i class="bi bi-circle"></i><span>Form Layouts</span>
                             </a>
@@ -44,11 +44,11 @@ export default function SideMenuComponent() {
                             <a href="forms-validation.html">
                             <i class="bi bi-circle"></i><span>Form Validation</span>
                             </a>
-                        </li>
+                        </li> */}
                     </ul>
                 </li>
 
-                <li className="nav-item">
+                {/* <li className="nav-item">
                     <a class="nav-link collapsed" data-bs-target="#izbrisi-nav" data-bs-toggle="collapse" href="#">
                         <i class="bi bi-trash3-fill"></i>
                         <span>Izbriši</span>
@@ -84,8 +84,8 @@ export default function SideMenuComponent() {
                     </a>
                 </li>
 
-            </ul>
-
+            </ul> */}
+                </ul>
         </aside>
 
   )

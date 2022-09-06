@@ -22,7 +22,10 @@ export default class Prijava extends Component {
                 error: false,
                 message: "Neka poruka"
             },
-            errorMessage: ""
+            errorMessage: {
+                error: false,
+                message: ""
+            }
         }
 
         this.handleInputFieldChange = this.handleInputFieldChange.bind(this);
@@ -40,16 +43,22 @@ export default class Prijava extends Component {
       }
   
     handleSubmit(e) {
-
+      
+        
         api.login({
             email: this.state.email,
             password: this.state.password 
         }).then(res => {
-            
+
+            if(res.data.status === "login") {
+                console.log(res.data.message);
+                this.setErrorMessage(res.data.message, true);
+            }
+
             this.setState(Object.assign(this.state, 
                 {isLoggedIn: true
                 }));
-
+            
             if(res.data.role_admin !== undefined && res.data.role_admin === "ADMIN"){
                 this.setState(Object.assign(this.state, {
                     role: res.data.role_admin
@@ -60,22 +69,21 @@ export default class Prijava extends Component {
                 }));
             }
 
-        }).catch(err => {
-            
-            this.setState(Object.assign(
-                this.state, {
-                    errorMessage: "Prijava nije uspjela pokušajte ponovo sa ispravnim parametrima.."
-                }
-            ))
-        })
-        
+        });
+       
+        setTimeout(() => {
+            this.setErrorMessage("", false);
+        }, 2000);
+
       }
 
-      setErrorMessage(message) {
+      setErrorMessage(message, state) {
         this.setState(Object.assign(this.state, Object.assign(this.state.errorMessage, {
-            error: true,
+            error: state,
             message: message
         })))
+console.log("cigla")
+        console.log(this.state.errorMessage.message);
       }
       
   render() {
@@ -119,12 +127,13 @@ export default class Prijava extends Component {
                     />
                     <label className="form-check-label">Check me out</label>
                 </div> */}
+                <Alert id="alert" variant="danger" className={this.state.errorMessage.error ? "" : "d-none"}>{this.state.errorMessage.message}</Alert>
                 <Form.Group>
                     <Button variant="primary" onClick={() => this.handleSubmit()}>Log in</Button>
                 </Form.Group>
                 </div>
             </Form>
-            <Alert variant="danger" className={this.state.errorMessage ? '' : 'd-none'}>{this.state.errorMessage}</Alert>
+            
             </div>
         </LoginContainer>
 

@@ -1,4 +1,5 @@
 import React from "react";
+import Spinner from 'react-bootstrap/Spinner';
 import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
 import { FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -26,7 +27,8 @@ export default class PetsAndProducts extends React.Component {
             selectedAnimalId: 0,
             breeds: [],
             selectedBreedId: 0,
-            sex: ""
+            sex: "",
+            loading: true
         }
     }
 
@@ -49,10 +51,10 @@ export default class PetsAndProducts extends React.Component {
         }
 
         let petts = [];
+        let loadingg = false;
         const photoDestination = ApiConfig.baseUrl + "resources/pet/"
 
         await api.api("api/user/pet/search", 'post', objectFilter).then(res => {
-
             res.data.map(pet => {
 
                 petts.push(
@@ -72,7 +74,8 @@ export default class PetsAndProducts extends React.Component {
         });
 
         this.setState(Object.assign(this.state, {
-            pets: petts
+            pets: petts,
+            loading: loadingg
         }));
         
     }
@@ -99,6 +102,7 @@ export default class PetsAndProducts extends React.Component {
         let animalls = [];
 
         await api.api("api/user/get/animal/byCategoryId/" + this.state.selectedCategoryId, 'get', {}).then(res => {
+            
             res.data.map(animal => {
                 animalls.push(
                     {
@@ -161,27 +165,29 @@ export default class PetsAndProducts extends React.Component {
     </Container>
       )
     }
-
-
     showPets(){
-        if(this.state.pets?.length === 0){
-            return(
-                <div>Nemamo artikala u ponudi za ovu kategoriju!</div>
-            );
-        }
+            if(this.state.loading === true){
 
-        return (
-            <Row>
-                {
-                    this.state.pets.map(pet => {
-                        return (
-                            <SinglePetProductPreview key={pet.petId} pet={pet} />
-                        );
-                    })
-                }
-            </Row>
-        );
-    }
+                return(
+                    <Spinner animation="border" />
+                );
+            }if(this.state.pets.length){
+            return (
+                <Row>
+                    {
+                        this.state.pets.map(pet => {
+                            return (
+                                <SinglePetProductPreview key={pet.petId} pet={pet} />
+                            );
+                        })
+                    }
+                </Row>
+            );
+        }else{
+                return <div>Nemamo nista u ponudi za ovu kategoriju!</div>
+            }
+        }
+        
 
     printFilters(){
         return(

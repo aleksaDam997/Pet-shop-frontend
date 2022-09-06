@@ -28,19 +28,22 @@ export class AddToCartInput extends React.Component {
             quantity: this.state.quantity
         };
 
+        console.log(petId);
+        console.log(data);
+
         api.apiToken('api/user/add/cart-item/pet/' +  petId, 'post', data)
         .then((res) => {
-
+            window.dispatchEvent(new CustomEvent('cart.update'));
             console.log(res.data);
         });
-    }
+        }
 
     render() {
         return (
             <Form.Group>
                 <Row>
                     <Col xs="7">
-                        <Form.Control className='text-center' type="number" min="1" step="1" value={ this.state.quantity }
+                        <Form.Control className='text-center' type="number" min="1" step="1" max={Number(this.props.pet.quantity)} value={ this.state.quantity }
                                         onChange={ (e) => this.quantityChanged(e) } />
                     </Col>
                     <Col xs="5">

@@ -27,7 +27,6 @@ export class CartPage extends React.Component{
     }
 
     componentWillMount(){
-        
         window.removeEventListener('cart.update', () => this.updateCart());
     }
 
@@ -104,7 +103,7 @@ export class CartPage extends React.Component{
                 this.setStateCart(undefined);
                 return;
             }
-
+            console.log(res);
 
             this.setStateCart(res.data);
 
@@ -112,9 +111,10 @@ export class CartPage extends React.Component{
     }
 
     deleteFromCart(petId){
-
+        console.log(petId);
+        console.log(this.state.cart.cartId);
         api.api("api/user/delete/cartItem/cart/" + this.state.cart.cartId + "/pet/" + petId, "delete", {}).then(res => {
-            console.log(res.data);
+            window.dispatchEvent(new CustomEvent('cart.update'));
         })
     }
 
@@ -125,9 +125,11 @@ export class CartPage extends React.Component{
                 this.setStateCart(undefined);
                 return;
             }
+            console.log(res);
 
             this.setStateMessage('Your order has been made.\nCongrats');
 
+            window.dispatchEvent(new CustomEvent("order.update"));
             this.setStateCart(undefined);
             this.setStateQuantity(0);
         });

@@ -2,6 +2,7 @@ import React from 'react';
 import './FormSignup.css';
 import useForm from './useForm';
 import validate from './validateInfo';
+import { Link } from 'react-router-dom';
 // import * as api from '../../api/api';
 
 
@@ -80,7 +81,7 @@ const FormSignup = ({submitForm}) => {
 			</div>
 			<div>
 				<button type='submit' className='btn btn-primary' >Registruj se</button>
-				<span>Vec si registrovan? Uloguj se <a href='/prijava'>ovdje</a>.</span>
+				<span>Vec si registrovan? Uloguj se <Link className='link-login' to='/prijava'>ovdje</Link>.</span>
 			</div>
 		</form>
    

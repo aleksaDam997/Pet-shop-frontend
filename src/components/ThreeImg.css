@@ -23,7 +23,7 @@
 }
 
 .link:hover {
-    border: 2px solid aqua;
+    border: 2px solid rgba(var(--bs-danger-rgb),var(--bs-text-opacity))!important;
 }
 
 @media screen and (max-width:800px) {

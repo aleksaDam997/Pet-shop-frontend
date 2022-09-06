@@ -21,13 +21,13 @@ export class OrderPage extends React.Component{
     }
 
     componentDidMount(){
-        window.addEventListener('cart.update', () => this.updateCart());
+        window.addEventListener('order.update', () => this.updateOrders());
         this.updateOrders();
     }
 
     componentWillMount(){
         
-        window.removeEventListener('cart.update', () => this.updateCart());
+        window.removeEventListener('order.update', () => this.updateOrders());
     }
 
     // componentDidUpdate() {

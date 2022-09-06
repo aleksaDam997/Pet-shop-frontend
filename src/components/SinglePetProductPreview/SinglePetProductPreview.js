@@ -58,7 +58,10 @@ export class SinglePetProductPreview extends React.Component{
                         </Card.ImgOverlay>     */}
                     </div>
                     <Card.Body>
-                        <Card.Text className="bold">{this.state.pet.excerpt}</Card.Text>
+                        <Card.Text className="bold">
+                        {(this.state.pet.excerpt).length <= 15 ? 
+                             this.state.pet.excerpt : `${(this.state.pet.excerpt).slice(0, 45)}...`}
+                        </Card.Text>
                         <Card.Text className="bold text-danger">Cijena: {this.state.pet.discount ? (this.state.pet.retailPrice - this.state.pet.retailPrice * this.state.pet.discount) : this.state.pet.retailPrice} KM</Card.Text>
                         <AddToCartInput pet={this.state.pet}></AddToCartInput>
                         <br />

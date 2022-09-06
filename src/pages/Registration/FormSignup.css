@@ -67,3 +67,9 @@ form div input {
 span{
 	margin-left: 15px;
 }
+.link-login{
+	color: blue;
+}
+.link-login:hover{
+	color: blue;
+}

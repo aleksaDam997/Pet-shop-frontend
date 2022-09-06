@@ -84,29 +84,24 @@ export function login({email, password}) {
         axios.post("http://localhost:8080/api/login", params, config)
           .then((res) => {
   
-            if(res.status < 200 || res.status >= 300){
-  
-              const response = {
-                  status: 'error',
-                  data: res.data
-              };
-
-              return resolve(response);
-          }
+        //     if(res.data.status < 200 || res.data.status >= 300 && res.data.status !== 401){
+            
+        //       const response = {
+        //           status: 'error',
+        //           data: res.data
+        //       };
           
-          if(res.data.statusCode < 0){
-              const response = {
-                  status: 'ok',
-                  data: res.data
-              };
+        //       return resolve(response);
+        //   }
+          
+        //   if(res.data.statusCode < 0){
+        //       const response = {
+        //           status: 'ok',
+        //           data: res.data
+        //       };
       
-              return resolve(response);
-          }
-      
-          const response = {
-              status: 'ok',
-              data: res.data
-          };
+        //       return resolve(response);
+        //   }
 
           localStorage.setItem('access_token', res.data.access_token);
           localStorage.setItem('refresh_token', res.data.refresh_token);
@@ -114,11 +109,12 @@ export function login({email, password}) {
           localStorage.setItem('role_admin', res.data.role_admin);
           localStorage.setItem('role_user', res.data.role_user);
 
-
-          return resolve(response);
+          return resolve(res);
   
           })
-    });
+    }).catch(err => {
+        console.log(err.response)
+    })
   }
 
   export function apiFile(path, name, files) {
