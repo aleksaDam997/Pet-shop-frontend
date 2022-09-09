@@ -205,7 +205,7 @@ export default function AdministratorAddEditPetPage() {
 
 
 
-    }, [selected.petCategoryId, selected.animalId, selected.breedId]);
+    }, [selected.petCategoryId, selected.animalId, selected.breedId, pet.petId]);
 
     return (
         <Container>
