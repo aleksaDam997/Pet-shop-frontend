@@ -19,9 +19,11 @@ export default function AddBreedModal() {
 
   const [message, setMessage] = useState("");
 
-  useState(() => {
+  useEffect(() => {
     
     getAnimals();
+    window.addEventListener('breed.modal.update', () => getAnimals());
+
 
   }, [])
 

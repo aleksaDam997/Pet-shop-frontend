@@ -80,6 +80,7 @@ export default function AddPetCategoryModal() {
       }
       
       setMessage("Kategorija je uspješno sačuvana");
+      window.dispatchEvent(new CustomEvent('animal.modal.update'));
 
     }).catch(err => {
 

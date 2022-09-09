@@ -20,9 +20,12 @@ export default function AddAnimalModal() {
 
   const [message, setMessage] = useState("");
 
-  useState(() => {
+  useEffect(() => {
     
     getCategories();
+
+    window.addEventListener('animal.modal.update', () => getCategories());
+
 
   }, [])
 
@@ -100,6 +103,8 @@ export default function AddAnimalModal() {
       }
       
       setMessage("Životinja je uspješno sačuvana");
+      window.dispatchEvent(new CustomEvent('breed.modal.update'));
+
 
     }).catch(err => {
 
