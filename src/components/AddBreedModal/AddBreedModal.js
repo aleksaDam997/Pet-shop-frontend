@@ -29,6 +29,10 @@ export default function AddBreedModal() {
     api.apiToken("api/user/get/animal", "get", {}).then(res => {
 
         setAnimals(res.data);
+
+        setBreed(Object.assign(breed, {
+          animalId: res.data[0].animalId
+        }))
       })
   }
 

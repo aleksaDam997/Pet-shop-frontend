@@ -30,6 +30,9 @@ export default function AddAnimalModal() {
     api.apiToken("api/user/get/categories", "get", {}).then(res => {
 
         setCategories(res.data);
+        setAnimal(Object.assign(animal, {
+          petCategoryId: res.data[0].petCategoryId
+        }))
       })
   }
 
